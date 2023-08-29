@@ -1,5 +1,5 @@
 import { supabase } from "./supabase";
-import type { SpotifyConnectionResponse } from '../types';
+import type { SpotifyConnectionResponse } from '../spotify.types';
 
 const clientId = import.meta.env.VITE_SPOTIFY_ID;
 const { data: clientSecret } = await supabase.rpc('read_secret', { secret_name: 'SPOTIFY_CLIENT_SECRET' });
@@ -14,6 +14,7 @@ const authOptions = {
     'grant_type': 'client_credentials'
   }),
 };
+
 const getSpotifyConnect = async (url = ""): Promise<SpotifyConnectionResponse> => {
   const response = await fetch(url, authOptions);
   return await response.json();

@@ -10,6 +10,7 @@ export async function getArtists() {
   const { data: artists, error } = await supabase
     .from('artist')
     .select('*');
+
   return artists;
 }
 
@@ -18,7 +19,30 @@ export async function getArtist(artistId: string) {
     .from('artist')
     .select('*')
     .eq('id', artistId);
+
   return artist ? artist[0] : null;
+}
+
+export async function setArtist(artist: Tables<'artist'>) {
+  const { error } = await supabase
+    .from('artist')
+    .insert(artist);
+
+  if (error) {
+    console.log(error.code);
+    return false;
+  } else return true;
+}
+
+export async function setArtists(artists: Tables<'artist'>[]) {
+  const { error } = await supabase
+    .from('artist')
+    .insert(artists);
+
+  if (error) {
+    console.log(error.code);
+    return false;
+  } else return true;
 }
 
 export async function getAlbums(artistId: string) {
@@ -27,7 +51,7 @@ export async function getAlbums(artistId: string) {
     .select('album_id')
     .eq('artist_id', artistId);
 
-  const albums : Tables<'album'>[] = [];
+  const albums: Tables<'album'>[] = [];
 
   for (const albumId in albumsIds) {
     const album = await getAlbum(albumId);
@@ -35,6 +59,7 @@ export async function getAlbums(artistId: string) {
       albums.push(album);
     }
   }
+  return albums;
 }
 
 export async function getAlbum(id: string) {
@@ -44,4 +69,46 @@ export async function getAlbum(id: string) {
     .eq('id', id);
 
   return album ? album[0] : null;
+}
+
+export async function setAlbum(album: Tables<'album'>) {
+  const { error } = await supabase
+    .from('album')
+    .insert(album);
+
+  if (error) {
+    console.log(error.code);
+    return false;
+  } else return true;
+}
+
+export async function setAlbums(albums: Tables<'album'>[]) {
+  const { error } = await supabase
+    .from('album')
+    .insert(albums);
+
+  if (error) {
+    console.log(error.code);
+    return false;
+  } else return true;
+}
+
+export async function setSong(song: Tables<'song'>) {
+  const { error } = await supabase
+    .from('song')
+    .insert(song);
+  if(error) {
+    console.log(error.code);
+    return false;
+  } else return true;
+}
+
+export async function setSongs(songs: Tables<'song'>[]) {
+  const { error } = await supabase
+    .from('song')
+    .insert(songs);
+  if(error) {
+    console.log(error.code);
+    return false;
+  } else return true;
 }

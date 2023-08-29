@@ -11,37 +11,30 @@ export interface Database {
     Tables: {
       album: {
         Row: {
-          artist_id: string | null
+          album_type: Database["public"]["Enums"]["album_type_enum"] | null
           id: string
           img_url: string | null
-          is_liked: boolean | null
+          is_liked: boolean
           name: string | null
           year: string | null
         }
         Insert: {
-          artist_id?: string | null
+          album_type?: Database["public"]["Enums"]["album_type_enum"] | null
           id: string
           img_url?: string | null
-          is_liked?: boolean | null
+          is_liked?: boolean
           name?: string | null
           year?: string | null
         }
         Update: {
-          artist_id?: string | null
+          album_type?: Database["public"]["Enums"]["album_type_enum"] | null
           id?: string
           img_url?: string | null
-          is_liked?: boolean | null
+          is_liked?: boolean
           name?: string | null
           year?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "album_artist_id_fkey"
-            columns: ["artist_id"]
-            referencedRelation: "artist"
-            referencedColumns: ["id"]
-          }
-        ]
+        Relationships: []
       }
       album_songs: {
         Row: {
@@ -73,21 +66,21 @@ export interface Database {
       }
       artist: {
         Row: {
-          description: string | null
+          followers: number | null
           id: string
           img_url: string | null
           is_following: boolean | null
           name: string | null
         }
         Insert: {
-          description?: string | null
+          followers?: number | null
           id: string
           img_url?: string | null
           is_following?: boolean | null
           name?: string | null
         }
         Update: {
-          description?: string | null
+          followers?: number | null
           id?: string
           img_url?: string | null
           is_following?: boolean | null
@@ -123,57 +116,13 @@ export interface Database {
           }
         ]
       }
-      compilation: {
-        Row: {
-          album_id: string | null
-          id: string
-        }
-        Insert: {
-          album_id?: string | null
-          id: string
-        }
-        Update: {
-          album_id?: string | null
-          id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "compilation_album_id_fkey"
-            columns: ["album_id"]
-            referencedRelation: "album"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-      ep: {
-        Row: {
-          album_id: string | null
-          id: string
-        }
-        Insert: {
-          album_id?: string | null
-          id: string
-        }
-        Update: {
-          album_id?: string | null
-          id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "ep_album_id_fkey"
-            columns: ["album_id"]
-            referencedRelation: "album"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
       episode: {
         Row: {
           date: string | null
           description: string | null
           duration: number | null
           id: string
-          isExplicit: boolean | null
+          is_explicit: boolean
           name: string | null
           podcast_id: string | null
         }
@@ -182,7 +131,7 @@ export interface Database {
           description?: string | null
           duration?: number | null
           id: string
-          isExplicit?: boolean | null
+          is_explicit?: boolean
           name?: string | null
           podcast_id?: string | null
         }
@@ -191,7 +140,7 @@ export interface Database {
           description?: string | null
           duration?: number | null
           id?: string
-          isExplicit?: boolean | null
+          is_explicit?: boolean
           name?: string | null
           podcast_id?: string | null
         }
@@ -385,58 +334,33 @@ export interface Database {
           }
         ]
       }
-      single: {
-        Row: {
-          album_id: string | null
-          id: string
-        }
-        Insert: {
-          album_id?: string | null
-          id: string
-        }
-        Update: {
-          album_id?: string | null
-          id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "single_album_id_fkey"
-            columns: ["album_id"]
-            referencedRelation: "album"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
       song: {
         Row: {
           album_id: string | null
-          artist_id: string | null
           duration: number | null
-          genre: string | null
           id: string
-          is_explicit: boolean | null
-          is_liked: boolean | null
+          is_explicit: boolean
+          is_liked: boolean
           name: string | null
+          track_number: number | null
         }
         Insert: {
           album_id?: string | null
-          artist_id?: string | null
           duration?: number | null
-          genre?: string | null
           id: string
-          is_explicit?: boolean | null
-          is_liked?: boolean | null
+          is_explicit?: boolean
+          is_liked?: boolean
           name?: string | null
+          track_number?: number | null
         }
         Update: {
           album_id?: string | null
-          artist_id?: string | null
           duration?: number | null
-          genre?: string | null
           id?: string
-          is_explicit?: boolean | null
-          is_liked?: boolean | null
+          is_explicit?: boolean
+          is_liked?: boolean
           name?: string | null
+          track_number?: number | null
         }
         Relationships: [
           {
@@ -444,17 +368,33 @@ export interface Database {
             columns: ["album_id"]
             referencedRelation: "album"
             referencedColumns: ["id"]
-          },
+          }
+        ]
+      }
+      song_artist: {
+        Row: {
+          artist_id: string
+          song_id: string
+        }
+        Insert: {
+          artist_id: string
+          song_id: string
+        }
+        Update: {
+          artist_id?: string
+          song_id?: string
+        }
+        Relationships: [
           {
-            foreignKeyName: "song_artist_id_fkey"
+            foreignKeyName: "song_artist_artist_id_fkey"
             columns: ["artist_id"]
             referencedRelation: "artist"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "song_genre_fkey"
-            columns: ["genre"]
-            referencedRelation: "genre"
+            foreignKeyName: "song_artist_song_id_fkey"
+            columns: ["song_id"]
+            referencedRelation: "song"
             referencedColumns: ["id"]
           }
         ]
@@ -472,7 +412,7 @@ export interface Database {
       }
     }
     Enums: {
-      [_ in never]: never
+      album_type_enum: "compilation" | "album" | "single"
     }
     CompositeTypes: {
       [_ in never]: never

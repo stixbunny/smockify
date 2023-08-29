@@ -1,0 +1,89 @@
+@import './font/circularfontface.css';
+
+/* Colors */
+:root {
+  --background-base: #121212;
+  --background-highlight: #1a1a1a;
+  --background-press: #000;
+  --background-elevated-base: #242424;
+  --background-elevated-highlight: #2a2a2a;
+  --background-elevated-press: #000;
+  --background-tinted-base: hsla(0,0%,100%,.07);
+  --background-tinted-highlight: hsla(0,0%,100%,.1);
+  --background-tinted-press: hsla(0,0%,100%,.04);
+  --background-unsafe-for-small-text-base: #121212;
+  --background-unsafe-for-small-text-highlight: #121212;
+  --background-unsafe-for-small-text-press: #121212;
+  --text-base: #fff;
+  --text-subdued: #a7a7a7;
+  --text-bright-accent: #1ed760;
+  --text-negative: #f15e6c;
+  --text-warning: #ffa42b;
+  --text-positive: #1ed760;
+  --text-announcement: #3d91f4;
+  --essential-base: #fff;
+  --essential-subdued: #727272;
+  --essential-bright-accent: #1ed760;
+  --essential-negative: #e91429;
+  --essential-warning: #ffa42b;
+  --essential-positive: #1ed760;
+  --essential-announcement: #0d72ea;
+  --decorative-base: #fff;
+  --decorative-subdued: #292929;
+}
+/* Sizes */
+:root {
+  --mobile-max-width: 560px;
+  --tablet-max-width: 768px;
+
+  --min-header-width: 280px;
+  --min-content-width: 415px;
+
+  --base-font: 16px;
+  /*welcome*/
+  --fs-larger: 2rem; /*almost bold*/
+  /*section-title in content*/
+  --fs-large: 1.5rem; /*almost bold*/
+  /*nav-title, card-title, song-title*/
+  --fs-medium: 1rem; /*almost bold*/ /*song-title in nav not bold!*/
+  /*nav-tabs, info, song-subtitle, see-more, card-subtitle, player-title*/
+  /**/
+  --fs-small: 0.875rem;
+  /*player-subtitle and player-song-bar*/
+  --fs-smaller: 0.6875rem;
+}
+
+@media (max-width: 560px) {
+  :root {
+    --base-font: 14px;
+    --fs-small: 0.8125rem;
+  }
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+html {
+  font-size: var(--base-font);
+}
+
+body {
+  color: var(--text-base);
+  background: var(--background-press);
+  transition: color 0.5s, background-color 0.5s;
+  line-height: 1.6;
+  font-family: 'circular', Gotham, Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+span.dot {
+  display: inline !important;
+  font-family: sans-serif !important;
+}

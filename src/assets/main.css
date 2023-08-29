@@ -1,0 +1,19 @@
+@import './base.css';
+
+#app {
+  min-width: 630px;
+  height: 100dvh;
+  margin: 0 auto;
+  padding: 8px;
+  font-weight: normal;
+}
+
+a {
+  text-decoration: none;
+}
+@media (max-width: 560px) {
+  #app {
+    min-width: 340px;
+    padding: 0;
+  }
+}

@@ -97,7 +97,7 @@ export async function setSong(song: Tables<'song'>) {
   const { error } = await supabase
     .from('song')
     .insert(song);
-  if(error) {
+  if (error) {
     console.log(error.code);
     return false;
   } else return true;
@@ -107,8 +107,44 @@ export async function setSongs(songs: Tables<'song'>[]) {
   const { error } = await supabase
     .from('song')
     .insert(songs);
-  if(error) {
+  if (error) {
     console.log(error.code);
     return false;
   } else return true;
+}
+
+export async function setSongsArtists(songs: Tables<'song'>[], artistsIds: string[][]) {
+  for (let i = 0; i < songs.length; i++) {
+    for (const artistId of artistsIds[i]) {
+      const { error } = await supabase
+        .from('song_artist')
+        .insert([{
+          artist_id: artistId,
+          song_id: songs[i].id,
+        }]);
+      if (error) {
+        console.log(error.code);
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+export async function setAlbumArtists(albums: Tables<'album'>[], artistsIds: string[][]) {
+  for (let i = 0; i < albums.length; i++) {
+    for (const artistId of artistsIds[i]) {
+      const { error } = await supabase
+        .from('artist_discography')
+        .insert([{
+          artist_id: artistId,
+          album_id: albums[i].id,
+        }]);
+      if (error) {
+        console.log(error.code);
+        return false;
+      }
+    }
+  }
+  return true;
 }

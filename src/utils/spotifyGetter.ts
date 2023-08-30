@@ -30,9 +30,11 @@ export async function getSpotifyArtist(id: string) {
   const response = await fetch(url + id, authOptions);
   if (response.ok) {
     const json: ArtistResponse = await response.json();
+    console.log(`artist ${json.id}:`);
+    console.log(json.images);
     return {
       id: json.id,
-      img_url: json.images[2].url,
+      img_url: json.images.length > 0? json.images[2].url : '',
       name: json.name,
       followers: json.followers.total,
       is_following: false,
@@ -86,7 +88,7 @@ export async function getSpotifyTracks(albumId: string) {
   if (response.ok) {
     const json: Tracks = await response.json();
     const tracks : Tables<'song'>[] = [];
-    const artists = [];
+    const artists : string[][] = [];
     for(const track of json.items) {
       tracks.push({
         album_id: albumId,
@@ -97,7 +99,7 @@ export async function getSpotifyTracks(albumId: string) {
         name: track.name,
         track_number: track.track_number,
       })
-      const temp = [];
+      const temp : string[] = [];
       for(const artist of track.artists) {
         temp.push(artist.id);
       }

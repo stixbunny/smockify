@@ -68,7 +68,7 @@ export interface ArtistResponse {
   genres:        string[];
   href:          string;
   id:            string;
-  images:        Image[];
+  images:        Image[]; //can be zero
   name:          string;
   popularity:    number;
   type:          string;
@@ -201,7 +201,7 @@ export interface Followers {
 export interface LinkedFrom {
   external_urls?: ExternalUrls;
   href?:          string;
-  id?:            string;
+  id:            string;
   name?:         string;
   type?:          string;
   uri?:           string;

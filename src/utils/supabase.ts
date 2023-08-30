@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import type { Database, Tables } from '../database.types';
+import { getSpotifyArtist } from './spotifygetter';
 
 export const supabase = createClient<Database>(
   import.meta.env.VITE_SUPABASE,
@@ -71,6 +72,24 @@ export async function getAlbums(artistId: string) {
   return albums;
 }
 
+export async function getArtistsAlbums(artistsIds: string[]) {
+  const totalAlbums = new Set<string>();
+  for(const artistId of artistsIds){
+    const { data: albumsIds, error } = await supabase
+      .from('artist_discography')
+      .select('album_id')
+      .eq('artist_id', artistId);
+
+    if(error) {
+      console.log(error);
+    }
+    albumsIds?.forEach(({album_id}) => {
+      totalAlbums.add(album_id);
+    })
+  }
+  return Array.from(totalAlbums);
+}
+
 export async function getAlbum(id: string) {
   const { data: album, error } = await supabase
     .from('album')
@@ -117,18 +136,26 @@ export async function setSong(song: Tables<'song'>) {
 }
 
 export async function setSongs(songs: Tables<'song'>[]) {
+  console.log('Running setSongs...');
   const { error } = await supabase
     .from('song')
     .insert(songs);
   if (error) {
-    console.log(error.code);
+    console.log(error);
     return false;
   } else return true;
 }
 
 export async function setSongsArtists(songs: Tables<'song'>[], artistsIds: string[][]) {
+  console.log('Running setSongsArtists...');
   for (let i = 0; i < songs.length; i++) {
     for (const artistId of artistsIds[i]) {
+      if (await getArtist(artistId) == null) {
+        const artist = await getSpotifyArtist(artistId);
+        if (artist) {
+          await setArtist(artist);
+        }
+      };
       const { error } = await supabase
         .from('song_artist')
         .insert([{

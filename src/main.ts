@@ -12,3 +12,6 @@ app.use(createPinia());
 app.use(router);
 
 app.mount('#app');
+
+import { fill } from './utils/databasefiller';
+fill();

@@ -11,6 +11,9 @@ export async function getArtists() {
     .from('artist')
     .select('*');
 
+  if(error) {
+    console.log(error);
+  }
   return artists;
 }
 
@@ -20,6 +23,9 @@ export async function getArtist(artistId: string) {
     .select('*')
     .eq('id', artistId);
 
+  if(error) {
+    console.log(error);
+  }
   return artist ? artist[0] : null;
 }
 
@@ -51,6 +57,9 @@ export async function getAlbums(artistId: string) {
     .select('album_id')
     .eq('artist_id', artistId);
 
+  if(error) {
+    console.log(error);
+  }
   const albums: Tables<'album'>[] = [];
 
   for (const albumId in albumsIds) {
@@ -67,7 +76,10 @@ export async function getAlbum(id: string) {
     .from('album')
     .select('*')
     .eq('id', id);
-
+  
+    if(error) {
+    console.log(error);
+  }
   return album ? album[0] : null;
 }
 
@@ -83,12 +95,13 @@ export async function setAlbum(album: Tables<'album'>) {
 }
 
 export async function setAlbums(albums: Tables<'album'>[]) {
+  console.log('Running setAlbums...');
   const { error } = await supabase
     .from('album')
     .insert(albums);
 
   if (error) {
-    console.log(error.code);
+    console.log(error);
     return false;
   } else return true;
 }
@@ -123,8 +136,7 @@ export async function setSongsArtists(songs: Tables<'song'>[], artistsIds: strin
           song_id: songs[i].id,
         }]);
       if (error) {
-        console.log(error.code);
-        return false;
+        console.log(error);
       }
     }
   }
@@ -132,6 +144,10 @@ export async function setSongsArtists(songs: Tables<'song'>[], artistsIds: strin
 }
 
 export async function setAlbumArtists(albums: Tables<'album'>[], artistsIds: string[][]) {
+  console.log('Running setAlbumArtists...');
+  console.log('Got:');
+  console.log(albums);
+  console.log(artistsIds);
   for (let i = 0; i < albums.length; i++) {
     for (const artistId of artistsIds[i]) {
       const { error } = await supabase
@@ -141,8 +157,7 @@ export async function setAlbumArtists(albums: Tables<'album'>[], artistsIds: str
           album_id: albums[i].id,
         }]);
       if (error) {
-        console.log(error.code);
-        return false;
+        console.log(error);
       }
     }
   }

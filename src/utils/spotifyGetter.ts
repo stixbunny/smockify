@@ -1,8 +1,23 @@
 import type { ArtistResponse, AlbumsResponse, Tracks } from '../spotify.types';
 import type { Tables } from "@/database.types";
-import { useMainStore } from '@/stores/main';
+import { response as spotifyResponse } from '../utils/spotify';
 
-const { access_token } = useMainStore();
+const { access_token } = spotifyResponse;
+console.log('access token: ' + access_token);
+
+function stringToDate(dateString: string, precision: 'year' | 'month' | 'day') {
+  switch(precision) {
+    case 'day':
+      return dateString;
+    case 'month':
+      return dateString + '-01';
+    case 'year':
+      if (dateString.length == 7) return dateString + '-01';
+      else return dateString + '-01-01';
+    default:
+      return dateString;
+  }
+}
 
 export async function getSpotifyArtist(id: string) {
   const url = "https://api.spotify.com/v1/artists/";
@@ -44,7 +59,7 @@ export async function getSpotifyAlbums(artistId: string) {
         id: album.id,
         img_url: album.images[2].url,
         name: album.name,
-        year: album.release_date,
+        year: stringToDate(album.release_date, album.release_date_precision) ,
         is_liked: false,
         album_type: album.album_type,
       })
@@ -54,7 +69,7 @@ export async function getSpotifyAlbums(artistId: string) {
       }
       artists.push(temp);
     }
-    return {albums, artists};
+    return { albums, artists };
   } else {
     return null;
   }
@@ -93,7 +108,3 @@ export async function getSpotifyTracks(albumId: string) {
     return null;
   }
 }
-
-// console.log(await getSpotifyArtist("0TnOYISbd1XYRBk9myaseg"));
-// console.log(await getSpotifyAlbums("0TnOYISbd1XYRBk9myaseg"));
-// console.log(await getSpotifyTracks("4rG0MhkU6UojACJxkMHIXB"));

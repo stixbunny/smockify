@@ -85,7 +85,7 @@ export interface AlbumAlbums {
   images:                 Image[];
   name:                   string;
   release_date:           string;
-  release_date_precision: string;
+  release_date_precision: 'year' | 'month' | 'day';
   restrictions:           Restrictions;
   type:                   string;
   uri:                    string;

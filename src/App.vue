@@ -1,6 +1,4 @@
 <script setup lang="ts">
-// import { RouterLink, RouterView } from 'vue-router';
-// import HelloWorld from './components/HelloWorld.vue';
 import TheMainNav from './components/layout/TheMainNav.vue';
 import ThePlayer from './components/layout/ThePlayer.vue';
 import TheContent from './components/layout/TheContent.vue';

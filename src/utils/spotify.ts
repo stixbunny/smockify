@@ -17,7 +17,8 @@ const authOptions = {
 
 const getSpotifyConnect = async (url = ""): Promise<SpotifyConnectionResponse> => {
   const response = await fetch(url, authOptions);
-  return await response.json();
+  console.log("Connecting to Spotify...");
+  return response.json();
 }
 
 export const response = await getSpotifyConnect(url);

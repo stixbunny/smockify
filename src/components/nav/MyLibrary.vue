@@ -1,242 +1,34 @@
 <script lang="ts" setup>
 import { useLibraryStore } from '@/stores/library';
-import { pImg } from '../../utils/placeholder';
 import ScrollableComponent from '../UI/ScrollableComponent.vue';
+import { useLocalStore } from '@/stores/local';
+import type { SimpleAlbumValue, SimpleArtistValue, SimplePlaylistValue } from '@/types';
 
 const library = useLibraryStore();
+const local = useLocalStore();
+
+function isAlbum(item: SimpleAlbumValue | SimpleArtistValue | SimplePlaylistValue): item is SimpleAlbumValue {
+  return 'album_type' in item;
+}
+
+function isPlaylist(item: SimpleAlbumValue | SimpleArtistValue | SimplePlaylistValue): item is SimplePlaylistValue {
+  return 'owner_id' in item;
+}
 </script>
 
 <template>
   <ScrollableComponent>
     <ul :aria-expanded="library.isExpanded">
-      <li>
+      <li v-for="item in local.myLibrary" :key="item.id">
         <a href="">
           <div class="mylibrary-img-container">
-            <img :src="pImg" alt="" />
+            <img :src="local.findSmallImage(item.id)" alt="" />
           </div>
           <div class="mylibrary-info-container">
-            <span class="title">Liked Songs</span>
-            <span class="subtitle">Lista <span class="dot">•</span> stixbunny</span>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="">
-          <div class="mylibrary-img-container">
-            <img :src="pImg" alt="" />
-          </div>
-          <div class="mylibrary-info-container">
-            <span class="title">Mi Playlist Favorita</span>
-            <span class="subtitle">Lista <span class="dot">•</span> stixbunny</span>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="">
-          <div class="mylibrary-img-container">
-            <img :src="pImg" alt="" />
-          </div>
-          <div class="mylibrary-info-container">
-            <span class="title">Canciones de Gorillaz</span>
-            <span class="subtitle">Lista <span class="dot">•</span> stixbunny</span>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="">
-          <div class="mylibrary-img-container">
-            <img :src="pImg" alt="" />
-          </div>
-          <div class="mylibrary-info-container">
-            <span class="title">Canciones de Gorillaz</span>
-            <span class="subtitle">Lista <span class="dot">•</span> stixbunny</span>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="">
-          <div class="mylibrary-img-container">
-            <img :src="pImg" alt="" />
-          </div>
-          <div class="mylibrary-info-container">
-            <span class="title">Canciones de Gorillaz</span>
-            <span class="subtitle">Lista <span class="dot">•</span> stixbunny</span>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="">
-          <div class="mylibrary-img-container">
-            <img :src="pImg" alt="" />
-          </div>
-          <div class="mylibrary-info-container">
-            <span class="title">Canciones de Gorillaz</span>
-            <span class="subtitle">Lista <span class="dot">•</span> stixbunny</span>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="">
-          <div class="mylibrary-img-container">
-            <img :src="pImg" alt="" />
-          </div>
-          <div class="mylibrary-info-container">
-            <span class="title">Canciones de Gorillaz</span>
-            <span class="subtitle">Lista <span class="dot">•</span> stixbunny</span>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="">
-          <div class="mylibrary-img-container">
-            <img :src="pImg" alt="" />
-          </div>
-          <div class="mylibrary-info-container">
-            <span class="title">Liked Songs</span>
-            <span class="subtitle">Lista <span class="dot">•</span> stixbunny</span>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="">
-          <div class="mylibrary-img-container">
-            <img :src="pImg" alt="" />
-          </div>
-          <div class="mylibrary-info-container">
-            <span class="title">Mi Playlist Favorita</span>
-            <span class="subtitle">Lista <span class="dot">•</span> stixbunny</span>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="">
-          <div class="mylibrary-img-container">
-            <img :src="pImg" alt="" />
-          </div>
-          <div class="mylibrary-info-container">
-            <span class="title">Canciones de Gorillaz</span>
-            <span class="subtitle">Lista <span class="dot">•</span> stixbunny</span>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="">
-          <div class="mylibrary-img-container">
-            <img :src="pImg" alt="" />
-          </div>
-          <div class="mylibrary-info-container">
-            <span class="title">Canciones de Gorillaz</span>
-            <span class="subtitle">Lista <span class="dot">•</span> stixbunny</span>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="">
-          <div class="mylibrary-img-container">
-            <img :src="pImg" alt="" />
-          </div>
-          <div class="mylibrary-info-container">
-            <span class="title">Canciones de Gorillaz</span>
-            <span class="subtitle">Lista <span class="dot">•</span> stixbunny</span>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="">
-          <div class="mylibrary-img-container">
-            <img :src="pImg" alt="" />
-          </div>
-          <div class="mylibrary-info-container">
-            <span class="title">Canciones de Gorillaz</span>
-            <span class="subtitle">Lista <span class="dot">•</span> stixbunny</span>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="">
-          <div class="mylibrary-img-container">
-            <img :src="pImg" alt="" />
-          </div>
-          <div class="mylibrary-info-container">
-            <span class="title">Canciones de Gorillaz</span>
-            <span class="subtitle">Lista <span class="dot">•</span> stixbunny</span>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="">
-          <div class="mylibrary-img-container">
-            <img :src="pImg" alt="" />
-          </div>
-          <div class="mylibrary-info-container">
-            <span class="title">Liked Songs</span>
-            <span class="subtitle">Lista <span class="dot">•</span> stixbunny</span>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="">
-          <div class="mylibrary-img-container">
-            <img :src="pImg" alt="" />
-          </div>
-          <div class="mylibrary-info-container">
-            <span class="title">Mi Playlist Favorita</span>
-            <span class="subtitle">Lista <span class="dot">•</span> stixbunny</span>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="">
-          <div class="mylibrary-img-container">
-            <img :src="pImg" alt="" />
-          </div>
-          <div class="mylibrary-info-container">
-            <span class="title">Canciones de Gorillaz</span>
-            <span class="subtitle">Lista <span class="dot">•</span> stixbunny</span>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="">
-          <div class="mylibrary-img-container">
-            <img :src="pImg" alt="" />
-          </div>
-          <div class="mylibrary-info-container">
-            <span class="title">Canciones de Gorillaz</span>
-            <span class="subtitle">Lista <span class="dot">•</span> stixbunny</span>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="">
-          <div class="mylibrary-img-container">
-            <img :src="pImg" alt="" />
-          </div>
-          <div class="mylibrary-info-container">
-            <span class="title">Canciones de Gorillaz</span>
-            <span class="subtitle">Lista <span class="dot">•</span> stixbunny</span>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="">
-          <div class="mylibrary-img-container">
-            <img :src="pImg" alt="" />
-          </div>
-          <div class="mylibrary-info-container">
-            <span class="title">Canciones de Gorillaz</span>
-            <span class="subtitle">Lista <span class="dot">•</span> stixbunny</span>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="">
-          <div class="mylibrary-img-container">
-            <img :src="pImg" alt="" />
-          </div>
-          <div class="mylibrary-info-container">
-            <span class="title">Canciones de Gorillaz</span>
-            <span class="subtitle">Lista <span class="dot">•</span> stixbunny</span>
+            <span class="title">{{ item.name }}</span>
+            <span v-if="isAlbum(item)" class="subtitle">Álbum <span class="dot">•</span> {{local.findAlbumArtistName(item.id)}}</span>
+            <span v-else-if="isPlaylist(item)" class="subtitle">Lista <span class="dot">•</span> {{ local.findOwner(item.owner_id)?.display_name }}</span>
+            <span v-else class="subtitle">Artista</span>
           </div>
         </a>
       </li>

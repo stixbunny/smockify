@@ -3,7 +3,6 @@ import { computed, ref } from 'vue';
 import {
   minHeaderWidth,
   minContentWidth,
-  minimizedDividerX,
   navMinimizedWidth
 } from '@/utils/styles';
 import { useWindowSize } from '@vueuse/core';

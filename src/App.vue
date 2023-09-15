@@ -18,10 +18,8 @@ watch(
   () => library.isExpanded,
   () => {
     if (!library.isExpanded) {
-      console.log("contracted nav, width is now " + nav.minimizedWidth + "px")
       nav.width = nav.minimizedWidth;
     } else {
-      console.log("expanded nav, width is now " + nav.lastSavedExpandedWidth + "px")
       nav.width = nav.lastSavedExpandedWidth;
     }
   }

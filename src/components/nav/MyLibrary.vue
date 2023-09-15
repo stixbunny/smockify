@@ -70,6 +70,15 @@ img {
   height: 48px;
   aspect-ratio: 1 / 1;
 }
+.mylibrary-info-container {
+  width: 100%;
+  overflow: hidden;
+}
+.mylibrary-info-container > * {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
 .mylibrary-info-container > .title {
   font-size: var(--fs-medium);
   font-weight: 400;

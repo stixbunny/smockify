@@ -38,6 +38,8 @@
 
   --min-header-width: 280px;
   --min-content-width: 415px;
+  --header-minimized-width: 72px;
+  --divider-minimized-width: 83.5px;
 
   --base-font: 16px;
   /*welcome*/

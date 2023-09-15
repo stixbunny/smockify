@@ -4,9 +4,10 @@ import ThePlayer from './components/layout/ThePlayer.vue';
 import TheContent from './components/layout/TheContent.vue';
 import {
   mobileMaxWidth,
-  startingHeaderWidth,
   minHeaderWidth,
   minContentWidth,
+  minimizedDividerX,
+  navMinimizedWidth
 } from '@/utils/styles';
 import { useMediaQuery } from '@vueuse/core';
 import { computed, ref, watch } from 'vue';
@@ -33,7 +34,9 @@ function clickingDivider() {
   isDividerDragging.value = true;
 }
 function movingDivider(e: MouseEvent) {
+  console.log("moving!")
   if (!isDividerDragging.value) {
+    console.log("but not dragging :(")
     return false;
   }
   const containerOffsetLeft = appContainer.value?.offsetLeft as number;
@@ -42,10 +45,12 @@ function movingDivider(e: MouseEvent) {
 }
 document.addEventListener('mouseup', (e: MouseEvent) => {
   if (isDividerDragging.value) {
+    console.log("mouseup and dragging!")
     if (library.isExpanded) {
       isDividerDragging.value = false;
       lastSavedExpandedNavSize = navWidthNumber.value;
     } else {
+      isDividerDragging.value = false;
       library.isExpanded = true;
     }
   }
@@ -64,7 +69,7 @@ watch(
 </script>
 
 <template>
-  <div class="app-container" ref="appContainer" v-if="isMobile">
+  <div id="app-container" ref="appContainer" v-if="isMobile">
     <main>
       <TheContent />
       <ThePlayer />
@@ -73,7 +78,7 @@ watch(
       <TheMainNav />
     </footer>
   </div>
-  <div class="app-container" ref="appContainer" v-else>
+  <div id="app-container" ref="appContainer" v-else>
     <header>
       <TheMainNav />
     </header>
@@ -88,7 +93,7 @@ watch(
 </template>
 
 <style scoped>
-.app-container {
+#app-container {
   width: 100%;
   height: 100dvh;
   display: grid;

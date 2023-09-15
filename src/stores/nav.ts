@@ -16,7 +16,7 @@ export const useNavStore = defineStore('nav', () => {
   const contentSpace: number = Number(minContentWidth.replace(/\D/g, ''));
 
   const width = ref(minExpandedWidth);
-  const lastSavedExpandedWidth = width;
+  const lastSavedExpandedWidth = width.value;
   const widthAsPx = computed(() => {
     return width.value + 'px';
   });

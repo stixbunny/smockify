@@ -1,5 +1,17 @@
 export type VolumePower = 'low' | 'medium' | 'high';
 
+export interface currentSong {
+  songId: string,
+  artistId: string,
+  albumId: string,
+  songName: string,
+  artistName: string,
+  duration_ms: number,
+  explicit: boolean,
+  isLiked: boolean,
+  imgUrl: string,
+}
+
 export interface SimpleSongValue {
   id: string,
   album_id: string;

@@ -77,6 +77,7 @@ main {
 footer {
   grid-area: player;
   width: 100%;
+  margin-top: 8px;
 }
 /* tablet or small screen */
 @media (min-width: 561px) and (max-width: 768px) {

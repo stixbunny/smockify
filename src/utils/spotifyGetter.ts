@@ -213,7 +213,7 @@ export async function getSpotifyPlaylist(playlistId: string) {
           artist.id+'big',
           {
             image_of: artist.id,
-            url: artist.images[0].url,
+            url: artist.images? artist.images[0].url : '',
             type: 'big',
           }
         );
@@ -221,7 +221,7 @@ export async function getSpotifyPlaylist(playlistId: string) {
           artist.id+'small',
           {
             image_of: artist.id,
-            url: artist.images[artist.images.length - 1].url,
+            url: artist.images? artist.images[artist.images.length - 1].url : '',
             type: 'small',
           }
         );

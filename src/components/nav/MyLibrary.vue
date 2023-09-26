@@ -14,12 +14,24 @@ function isAlbum(item: SimpleAlbumValue | SimpleArtistValue | SimplePlaylistValu
 function isPlaylist(item: SimpleAlbumValue | SimpleArtistValue | SimplePlaylistValue): item is SimplePlaylistValue {
   return 'owner_id' in item;
 }
+
+function isArtist(item: SimpleAlbumValue | SimpleArtistValue | SimplePlaylistValue): item is SimpleArtistValue {
+  return 'name' in item;
+}
+
+function typeOfItem(item: SimpleAlbumValue | SimpleArtistValue | SimplePlaylistValue) {
+  if(isAlbum(item)) return 'album-item';
+  if(isPlaylist(item)) return 'playlist-item';
+  if(isArtist(item)) return 'artist-item';
+  return false;
+}
+
 </script>
 
 <template>
   <ScrollableComponent>
     <ul :aria-expanded="library.isExpanded">
-      <li v-for="item in local.myLibrary" :key="item.id">
+      <li v-for="item in local.myLibrary" :key="item.id" :class="typeOfItem(item)">
         <a href="">
           <div class="mylibrary-img-container">
             <img :src="local.findSmallImage(item.id)" alt="" />
@@ -59,7 +71,14 @@ a:hover {
 a:visited {
   color: inherit;
 }
-img {
+.artist-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.playlist-item img,
+.album-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -69,6 +88,15 @@ img {
   width: 48px;
   height: 48px;
   aspect-ratio: 1 / 1;
+}
+.mylibrary-info-container {
+  width: 100%;
+  overflow: hidden;
+}
+.mylibrary-info-container > * {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .mylibrary-info-container > .title {
   font-size: var(--fs-medium);

@@ -21,10 +21,10 @@ import PlayerMisc from '../player/PlayerMisc.vue';
   grid-template-rows: auto;
   grid-template-areas: "now-playing player-controls player-misc";
   gap: 8px;
-  justify-items: center;
   align-items: center;
   height: 100%;
 }
+
 /* tablet and small screens */
 @media (min-width: 561px) and (max-width: 768px) {
   #player-container {

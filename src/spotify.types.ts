@@ -124,12 +124,12 @@ export interface AlbumAlbums {
 export interface Artist {
   external_urls: ExternalUrls;
   followers?:     Followers;
-  genres:        string[];
+  genres?:        string[];
   href:          string;
   id:            string;
-  images:        Image[];
+  images?:        Image[];
   name:          string;
-  popularity:    number;
+  popularity?:    number;
   type:          string;
   uri:           string;
 }

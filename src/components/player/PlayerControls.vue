@@ -40,6 +40,7 @@ const player = usePlayerStore();
   grid-template-rows: auto auto;
   justify-content: center;
   align-items: center;
+  gap: 8px;
   width: 100%;
   color: var(--text-subdued);
 }

@@ -6,7 +6,7 @@
     aria-hidden="true"
     viewBox="0 0 16 16"
     data-encore-id="icon"
-    class="Svg-sc-ytk21e-0 haNxPq"
+    fill="currentColor"
   >
     <path d="M11.196 8 6 5v6l5.196-3z"></path>
     <path

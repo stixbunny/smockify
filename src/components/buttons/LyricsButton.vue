@@ -1,9 +1,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import IconLyrics from '../icons/IconLyrics.vue';
-import { useLocalStore } from '@/stores/local';
-
-const local = useLocalStore();
 
 const props = defineProps<{
   active: boolean,

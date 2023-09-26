@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import type { VolumePower, currentSong } from '@/types';
 
 function msToTime(timeInMs: number): string {
@@ -34,7 +34,7 @@ export const usePlayerStore = defineStore('player', () => {
   const isPlaying = ref(false);
   const elapsedTimeMs = ref(10000); //0:10
   const volume = ref(100);
-  const lastSavedVolume = ref(volume);
+  const lastSavedVolume = ref(volume.value);
 
   const volumePower = computed<VolumePower>(() => {
     if(volume.value >= 66) return 'high';
@@ -42,10 +42,15 @@ export const usePlayerStore = defineStore('player', () => {
     else if(volume.value > 0) return 'low';
     return 'muted';
   })
+  const volumePercentage = computed(() => `${volume.value}%`);
   const totalTimeMs = computed(() => song.value.duration_ms); //4:17
   const totalTime = computed(() => msToTime(totalTimeMs.value));
   const elapsedTime = computed(() => msToTime(elapsedTimeMs.value));
   const elapsedPercentage = computed(() => { return `${elapsedTimeMs.value / totalTimeMs.value * 100}%` });
+
+  watch(volume, (newVolume, oldVolume) => {
+    if(oldVolume != 0 && newVolume == 0) lastSavedVolume.value = oldVolume;
+  })
 
   function pause() {
     isPlaying.value = false;
@@ -59,5 +64,5 @@ export const usePlayerStore = defineStore('player', () => {
     elapsedTimeMs.value = totalTimeMs.value * newElapsed;
   }
 
-  return { song, volume, lastSavedVolume, volumePower, totalTime, elapsedTime, isPlaying, elapsedPercentage, pause, play, setTiming };
+  return { song, volume, lastSavedVolume, volumePower, volumePercentage, totalTime, elapsedTime, isPlaying, elapsedPercentage, pause, play, setTiming };
 });

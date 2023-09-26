@@ -24,6 +24,7 @@ const player = usePlayerStore();
   justify-content: left;
   margin-left: 8px;
   gap: 16px;
+  height: 56px;
 }
 img {
   height: 100%;

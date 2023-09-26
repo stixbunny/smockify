@@ -17,7 +17,7 @@ function switchVolume() {
 </script>
 <template>
   <button @click="switchVolume">
-    <IconVolume />
+    <IconVolume :mode="player.volumePower" />
   </button>
 </template>
 

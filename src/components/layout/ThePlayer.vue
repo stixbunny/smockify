@@ -25,9 +25,6 @@ import PlayerMisc from '../player/PlayerMisc.vue';
   height: 100%;
 }
 
-#player-container > div {
-  height: 56px;
-}
 /* tablet and small screens */
 @media (min-width: 561px) and (max-width: 768px) {
   #player-container {

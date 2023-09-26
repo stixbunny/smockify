@@ -1,9 +1,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import IconQueue from '../icons/IconQueue.vue';
-import { useLocalStore } from '@/stores/local';
-
-const local = useLocalStore();
 
 const props = defineProps<{
   active: boolean,

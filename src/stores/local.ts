@@ -99,5 +99,32 @@ export const useLocalStore = defineStore('local', () => {
     return images.value.get(id + 'big')?.url || 'noimage';
   }
 
-  return { playlists, albums, artists, songs, owners, albumArtists, songArtists, myLibrary, findOwner, findAlbumArtistName, findSmallImage, findBigImage };
+  function switchLike(id: string, type: 'album' | 'playlist' | 'song' | 'artist') {
+    switch (type) {
+      case 'album': {
+        const album = albums.value.get(id);
+        if(album) album.liked = !album.liked;
+        break;
+      }
+      case 'playlist': {
+        const playlist = playlists.value.get(id);
+        if(playlist) playlist.liked = !playlist.liked;
+        break;
+      }
+      case 'song': {
+        const song = songs.value.get(id);
+        if(song) song.liked = !song.liked;
+        break;
+      }
+      case 'artist': {
+        const artist = artists.value.get(id);
+        if(artist) artist.liked = !artist.liked;
+        break;
+      }
+      default:
+        break;
+    }
+  }
+
+  return { playlists, albums, artists, songs, owners, albumArtists, songArtists, myLibrary, findOwner, findAlbumArtistName, findSmallImage, findBigImage, switchLike };
 });

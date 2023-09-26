@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import type { currentSong } from '@/types';
+import type { VolumePower, currentSong } from '@/types';
 
 function msToTime(timeInMs: number): string {
   function pad(num: number) {
@@ -33,7 +33,15 @@ export const usePlayerStore = defineStore('player', () => {
   });
   const isPlaying = ref(false);
   const elapsedTimeMs = ref(10000); //0:10
-  
+  const volume = ref(100);
+  const lastSavedVolume = ref(volume);
+
+  const volumePower = computed<VolumePower>(() => {
+    if(volume.value >= 66) return 'high';
+    else if(volume.value >= 33) return 'medium';
+    else if(volume.value > 0) return 'low';
+    return 'muted';
+  })
   const totalTimeMs = computed(() => song.value.duration_ms); //4:17
   const totalTime = computed(() => msToTime(totalTimeMs.value));
   const elapsedTime = computed(() => msToTime(elapsedTimeMs.value));
@@ -51,5 +59,5 @@ export const usePlayerStore = defineStore('player', () => {
     elapsedTimeMs.value = totalTimeMs.value * newElapsed;
   }
 
-  return { song, totalTime, elapsedTime, isPlaying, elapsedPercentage, pause, play, setTiming };
+  return { song, volume, lastSavedVolume, volumePower, totalTime, elapsedTime, isPlaying, elapsedPercentage, pause, play, setTiming };
 });

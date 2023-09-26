@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { usePlayerStore } from '@/stores/player';
+import HeartButton from '../buttons/HeartButton.vue';
 
 const player = usePlayerStore();
 </script>
@@ -11,6 +12,7 @@ const player = usePlayerStore();
       <div class="song-name">{{ player.song.songName }}</div>
       <div class="song-artists">{{ player.song.artistName }}</div>
     </div>
+    <HeartButton :id="player.song.songId" type="song" :liked="player.song.isLiked" />
   </div>
 </template>
 
@@ -18,5 +20,20 @@ const player = usePlayerStore();
 #now-playing {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: left;
+  margin-left: 8px;
+  gap: 16px;
+}
+img {
+  height: 100%;
+  border-radius: 4px;
+}
+.song-name {
+  font-size: var(--fs-small);
+}
+.song-artists {
+  font-size: var(--fs-smaller);
+  color: var(--text-subdued);
 }
 </style>

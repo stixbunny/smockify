@@ -1,4 +1,4 @@
-export type VolumePower = 'low' | 'medium' | 'high';
+export type VolumePower = 'muted' | 'low' | 'medium' | 'high';
 
 export interface currentSong {
   songId: string,
@@ -21,6 +21,7 @@ export interface SimpleSongValue {
   name: string;
   track_number: number;
   type: string;
+  liked: boolean;
 }
 
 export type SimpleSong= Map<string, SimpleSongValue>;
@@ -36,6 +37,7 @@ export interface SimpleAlbumValue {
   total_tracks: number;
   name: string;
   release_date: string;
+  liked: boolean;
 }
 
 export type SimpleAlbum= Map<string, SimpleAlbumValue>;
@@ -51,6 +53,7 @@ export interface SimpleArtistValue {
   genres?: string[];
   name: string;
   popularity?: number;
+  liked: boolean;
 }
 
 export type SimpleArtist = Map<string, SimpleArtistValue>;
@@ -61,6 +64,7 @@ export interface SimplePlaylistValue {
   followers: number;
   owner_id: string;
   name: string;
+  liked: boolean;
 }
 
 export type SimplePlaylist = Map<string, SimplePlaylistValue>;

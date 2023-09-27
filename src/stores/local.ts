@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { getSpotifyPlaylist } from '@/utils/spotifygetter';
+import { getSpotifyPlaylist } from '@/utils/spotifyGetter';
 import type { SimplePlaylist, SimpleAlbum, SimpleArtist, SimpleSong, Owner, SimpleAlbumArtist, SimpleSongArtist, SimpleImage, SimpleSongValue, SimpleAlbumValue, SimpleArtistValue, SimplePlaylistValue } from '@/types';
 
 export const useLocalStore = defineStore('local', () => {
@@ -99,6 +99,19 @@ export const useLocalStore = defineStore('local', () => {
     return images.value.get(id + 'big')?.url || 'noimage';
   }
 
+  function findItem(id: string, type: 'playlist' | 'album' | 'artist' | 'song') {
+    switch(type) {
+      case 'playlist':
+        return playlists.value.get(id);
+      case 'album':
+        return albums.value.get(id);
+      case 'artist':
+        return artists.value.get(id);
+      case 'song':
+        return songs.value.get(id);
+    }
+  }
+
   function switchLike(id: string, type: 'album' | 'playlist' | 'song' | 'artist') {
     switch (type) {
       case 'album': {
@@ -126,5 +139,5 @@ export const useLocalStore = defineStore('local', () => {
     }
   }
 
-  return { playlists, albums, artists, songs, owners, albumArtists, songArtists, myLibrary, findOwner, findAlbumArtistName, findSmallImage, findBigImage, switchLike };
+  return { playlists, albums, artists, songs, owners, albumArtists, songArtists, myLibrary, findOwner, findAlbumArtistName, findSmallImage, findBigImage, findItem, switchLike };
 });

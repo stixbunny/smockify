@@ -7,10 +7,18 @@
   padding: 8px;
   font-weight: normal;
 }
-
 a {
   text-decoration: none;
 }
+h1 {
+  font-size: var(--fs-larger);
+  font-weight: bold;
+}
+h2 {
+  font-size: var(--fs-large);
+  font-weight: bold;
+}
+
 @media (max-width: 560px) {
   #app {
     min-width: 340px;

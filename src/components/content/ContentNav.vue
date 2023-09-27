@@ -37,6 +37,8 @@ nav {
   align-items: center;
   position: absolute;
   top: 0px;
+  left: 0px;
+  right: 0px;
   --item-height: 32px;
 }
 .pill-container {

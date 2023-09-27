@@ -35,7 +35,7 @@ nav {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  position: sticky;
+  position: absolute;
   top: 0px;
   --item-height: 32px;
 }

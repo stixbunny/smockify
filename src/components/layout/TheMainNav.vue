@@ -84,7 +84,6 @@ nav > .container {
   padding: 8px;
   display: flex;
   flex-direction: column;
-  
 }
 .bottom.container[data-expanded=false] {
   padding: 8px 0px;

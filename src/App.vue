@@ -71,6 +71,8 @@ header {
 }
 main {
   grid-area: content;
+  min-height: 0;
+  height: 100%;
   border-radius: 8px;
   background-color: var(--background-base);
 }
@@ -81,7 +83,7 @@ footer {
 }
 /* tablet or small screen */
 @media (min-width: 561px) and (max-width: 768px) {
-  .app-container {
+  #app-container {
     grid-template-rows: auto 160px;
   }
 }

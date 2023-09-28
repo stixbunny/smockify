@@ -1,12 +1,30 @@
 <script lang="ts" setup>
 import { useLocalStore } from '@/stores/local';
+import { useHomeStore } from '@/stores/home';
+import type { onMounted } from 'vue';
 
-const local = useLocalStore();
-const props = defineProps(['id']);
+const home = useHomeStore();
+
+const date = new Date();
+let helloString = '';
+if( date.getHours() >= 5 && date.getHours() < 12) {
+  helloString = '¡Buenos dias!';
+} else if(date.getHours() >= 12 && date.getHours() < 6) {
+  helloString = '¡Buenas tardes!';
+} else helloString = '¡Buenas noches!';
+
 </script>
 
 <template>
-  <h1>¡Buenas tardes!</h1>
+  <section id="welcome">
+    <h1>{{ helloString }}</h1>
+    <ul>
+      <li v-for="item of home.welcomeItems" :key="item.title">
+      {{ item.title }}
+      </li>
+    </ul>
+  </section>
+  
   <ul>
     <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, quam!</li>
     <li>Ut eligendi cupiditate itaque illo earum odit blanditiis ipsa maiores?</li>

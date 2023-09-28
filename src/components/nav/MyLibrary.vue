@@ -2,63 +2,12 @@
 import { useLibraryStore } from '@/stores/library';
 import ScrollableComponent from '../UI/ScrollableComponent.vue';
 import { useLocalStore } from '@/stores/local';
-// import type { SimpleAlbumValue, SimpleArtistValue, SimplePlaylistValue } from '@/types';
 import { RouterLink } from 'vue-router';
+import { getRoute } from '@/utils/routes';
 
 const library = useLibraryStore();
 const local = useLocalStore();
 
-// function isAlbum(item: SimpleAlbumValue | SimpleArtistValue | SimplePlaylistValue): item is SimpleAlbumValue {
-//   return 'album_type' in item;
-// }
-
-// function isPlaylist(item: SimpleAlbumValue | SimpleArtistValue | SimplePlaylistValue): item is SimplePlaylistValue {
-//   return 'owner_id' in item;
-// }
-
-// function isArtist(item: SimpleAlbumValue | SimpleArtistValue | SimplePlaylistValue): item is SimpleArtistValue {
-//   return 'name' in item;
-// }
-
-// function typeOfItem(item: SimpleAlbumValue | SimpleArtistValue | SimplePlaylistValue) {
-//   if(isAlbum(item)) return 'album-item';
-//   if(isPlaylist(item)) return 'playlist-item';
-//   if(isArtist(item)) return 'artist-item';
-//   return false;
-// }
-
-function getRoute(id: string, type: 'playlist' | 'album' | 'artist' | 'song') {
-  switch (type) {
-    case 'playlist':
-      return {
-        name: 'playlist',
-        params: {
-          id: id,
-        },
-      };
-    case 'album':
-      return {
-        name: 'album',
-        params: {
-          id: id,
-        },
-      };
-    case 'artist':
-      return {
-        name: 'artist',
-        params: {
-          id: id,
-        },
-      };
-    case 'song':
-      return {
-        name: 'song',
-        params: {
-          id: id,
-        },
-      };
-  }
-}
 </script>
 
 <template>
@@ -104,9 +53,6 @@ a {
 }
 a:hover {
   background: var(--background-highlight);
-}
-a:visited {
-  /* color: inherit !important; */
 }
 .artist-item img {
   width: 100%;

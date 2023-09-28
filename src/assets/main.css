@@ -8,6 +8,11 @@
   font-weight: normal;
 }
 a {
+  color: var(--text-subdued);
+  text-decoration: none;
+}
+a:visited {
+  color: var(--text-subdued);
   text-decoration: none;
 }
 h1 {

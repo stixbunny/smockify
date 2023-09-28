@@ -22,21 +22,25 @@ const router = createRouter({
     {
       path: '/artist/:id',
       component: ArtistView,
+      props: true,
       name: 'artist',
     },
     {
       path: '/album/:id',
       component: AlbumView,
+      props: true,
       name: 'album',
     },
     {
       path: '/song/:id',
       component: SongView,
+      props: true,
       name: 'song',
     },
     {
       path: '/playlist/:id',
       component: PlaylistView,
+      props: true,
       name: 'playlist',
     },
     {

@@ -1,5 +1,20 @@
 export type VolumePower = 'muted' | 'low' | 'medium' | 'high';
 
+export class myLibraryItem {
+  id: string;
+  title: string;
+  author: string;
+  img: string;
+  type: 'song' | 'album' | 'artist' | 'playlist';
+  constructor(id: string, title: string, author: string, img: string, type: 'song' | 'album' | 'artist' | 'playlist') {
+    this.id = id;
+    this.title = title;
+    this.author = author;
+    this.img = img;
+    this.type = type;
+  }
+}
+
 export interface currentSong {
   songId: string,
   artistId: string,

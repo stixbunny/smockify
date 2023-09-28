@@ -1,7 +1,7 @@
 import type { ArtistResponse, AlbumsResponse, PlaylistResponse, Tracks, Album } from '../spotify.types';
 import type { Tables } from "@/database.types";
 import { response as spotifyResponse } from '../utils/spotify';
-import type { Owner, SimpleAlbum, SimpleAlbumArtist, SimpleArtist, SimpleImage, SimplePlaylist, SimplePlaylistValue, SimpleSong, SimpleSongArtist } from '@/types';
+import type { Owner, SimpleAlbum, SimpleAlbumArtist, SimpleArtist, SimpleArtistValue, SimpleImage, SimplePlaylist, SimplePlaylistValue, SimpleSong, SimpleSongArtist } from '@/types';
 
 const { access_token } = spotifyResponse;
 console.log('access token: ' + access_token);
@@ -18,6 +18,14 @@ function stringToDate(dateString: string, precision: 'year' | 'month' | 'day') {
     default:
       return dateString;
   }
+}
+
+function createSimpleArtist(id: string, name: string, liked: boolean, followers?: number, genres?: string[], popularity?: number): SimpleArtistValue {
+  return { id, followers, genres, name, popularity, liked };
+}
+
+function createSimpleImage(image_of: string, url: string, type: 'big' | 'small') {
+  return { image_of, url, type };
 }
 
 // export async function getSpotifyArtist(id: string) {
@@ -112,8 +120,6 @@ function stringToDate(dateString: string, precision: 'year' | 'month' | 'day') {
 //   }
 // }
 
-
-
 export async function getSpotifyPlaylist(playlistId: string) {
   const url = `
   https://api.spotify.com/v1/playlists/${playlistId}`;
@@ -137,6 +143,7 @@ export async function getSpotifyPlaylist(playlistId: string) {
         description: json.description,
         followers: json.followers.total,
         owner_id: json.owner.id,
+        liked: false,
       }]
     ]);
     const songs: SimpleSong = new Map();
@@ -146,12 +153,8 @@ export async function getSpotifyPlaylist(playlistId: string) {
     const albumArtists: Set<SimpleAlbumArtist> = new Set();
     const images: SimpleImage = new Map();
     images.set(
-      json.id+'big',
-      {
-        image_of: json.id,
-        url: json.images[0].url,
-        type: 'big',
-      }
+      json.id + 'big',
+      createSimpleImage(json.id, json.images[0].url, 'big'),
     )
     for (const song of json.tracks.items) {
       songs.set(
@@ -165,6 +168,7 @@ export async function getSpotifyPlaylist(playlistId: string) {
           name: song.track.name,
           track_number: song.track.track_number,
           type: song.track.type,
+          liked: false,
         }
       );
       const album: Album = song.track.album;
@@ -176,54 +180,41 @@ export async function getSpotifyPlaylist(playlistId: string) {
           total_tracks: album.total_tracks,
           name: album.name,
           release_date: stringToDate(album.release_date, album.release_date_precision),
+          liked: false,
         }
       );
       images.set(
-        album.id+'big',
-        {
-          image_of: album.id,
-          url: album.images[0].url,
-          type: 'big',
-        }
+        album.id + 'big',
+        createSimpleImage(album.id, album.images[0].url, 'big'),
       );
       images.set(
-        album.id+'small',
-        {
-          image_of: album.id,
-          url: album.images[album.images.length - 1].url,
-          type: 'small',
-        }
+        album.id + 'small',
+        createSimpleImage(album.id, album.images[album.images.length - 1].url, 'small'),
       );
       for (const artist of song.track.artists) {
         artists.set(
           artist.id,
-          {
-            id: artist.id,
-            followers: artist.followers ? artist.followers.total : 0,
-            genres: artist.genres,
-            name: artist.name,
-            popularity: artist.popularity,
-          }
+          createSimpleArtist(
+            artist.id,
+            artist.name,
+            false,
+            artist.followers?.total,
+            artist.genres,
+            artist.popularity,
+          )
         );
+        console.log();
         songArtists.add({
           artist_id: artist.id,
           song_id: song.track.id,
         });
         images.set(
-          artist.id+'big',
-          {
-            image_of: artist.id,
-            url: artist.images? artist.images[0].url : '',
-            type: 'big',
-          }
+          artist.id + 'big',
+          createSimpleImage(artist.id, artist.images ? artist.images[0].url : '', 'big'),
         );
         images.set(
-          artist.id+'small',
-          {
-            image_of: artist.id,
-            url: artist.images? artist.images[artist.images.length - 1].url : '',
-            type: 'small',
-          }
+          artist.id + 'small',
+          createSimpleImage(artist.id, artist.images ? artist.images[artist.images.length - 1].url : '', 'small'),
         );
       }
       for (const albumartist of album.artists) {

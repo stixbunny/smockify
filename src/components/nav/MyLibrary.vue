@@ -2,47 +2,84 @@
 import { useLibraryStore } from '@/stores/library';
 import ScrollableComponent from '../UI/ScrollableComponent.vue';
 import { useLocalStore } from '@/stores/local';
-import type { SimpleAlbumValue, SimpleArtistValue, SimplePlaylistValue } from '@/types';
+// import type { SimpleAlbumValue, SimpleArtistValue, SimplePlaylistValue } from '@/types';
+import { RouterLink } from 'vue-router';
 
 const library = useLibraryStore();
 const local = useLocalStore();
 
-function isAlbum(item: SimpleAlbumValue | SimpleArtistValue | SimplePlaylistValue): item is SimpleAlbumValue {
-  return 'album_type' in item;
-}
+// function isAlbum(item: SimpleAlbumValue | SimpleArtistValue | SimplePlaylistValue): item is SimpleAlbumValue {
+//   return 'album_type' in item;
+// }
 
-function isPlaylist(item: SimpleAlbumValue | SimpleArtistValue | SimplePlaylistValue): item is SimplePlaylistValue {
-  return 'owner_id' in item;
-}
+// function isPlaylist(item: SimpleAlbumValue | SimpleArtistValue | SimplePlaylistValue): item is SimplePlaylistValue {
+//   return 'owner_id' in item;
+// }
 
-function isArtist(item: SimpleAlbumValue | SimpleArtistValue | SimplePlaylistValue): item is SimpleArtistValue {
-  return 'name' in item;
-}
+// function isArtist(item: SimpleAlbumValue | SimpleArtistValue | SimplePlaylistValue): item is SimpleArtistValue {
+//   return 'name' in item;
+// }
 
-function typeOfItem(item: SimpleAlbumValue | SimpleArtistValue | SimplePlaylistValue) {
-  if(isAlbum(item)) return 'album-item';
-  if(isPlaylist(item)) return 'playlist-item';
-  if(isArtist(item)) return 'artist-item';
-  return false;
-}
+// function typeOfItem(item: SimpleAlbumValue | SimpleArtistValue | SimplePlaylistValue) {
+//   if(isAlbum(item)) return 'album-item';
+//   if(isPlaylist(item)) return 'playlist-item';
+//   if(isArtist(item)) return 'artist-item';
+//   return false;
+// }
 
+function getRoute(id: string, type: 'playlist' | 'album' | 'artist' | 'song') {
+  switch (type) {
+    case 'playlist':
+      return {
+        name: 'playlist',
+        params: {
+          id: id,
+        },
+      };
+    case 'album':
+      return {
+        name: 'album',
+        params: {
+          id: id,
+        },
+      };
+    case 'artist':
+      return {
+        name: 'artist',
+        params: {
+          id: id,
+        },
+      };
+    case 'song':
+      return {
+        name: 'song',
+        params: {
+          id: id,
+        },
+      };
+  }
+}
 </script>
 
 <template>
   <ScrollableComponent>
     <ul :aria-expanded="library.isExpanded">
-      <li v-for="item in local.myLibrary" :key="item.id" :class="typeOfItem(item)">
-        <a href="">
+      <li v-for="item in local.myLibrary" :key="item.id" :class="item.type + '-item'">
+        <RouterLink :to="getRoute(item.id, item.type)">
           <div class="mylibrary-img-container">
-            <img :src="local.findSmallImage(item.id)" alt="" />
+            <img :src="item.img" alt="" />
           </div>
           <div class="mylibrary-info-container">
-            <span class="title">{{ item.name }}</span>
-            <span v-if="isAlbum(item)" class="subtitle">Álbum <span class="dot">•</span> {{local.findAlbumArtistName(item.id)}}</span>
-            <span v-else-if="isPlaylist(item)" class="subtitle">Lista <span class="dot">•</span> {{ local.findOwner(item.owner_id)?.display_name }}</span>
-            <span v-else class="subtitle">Artista</span>
+            <span class="title">{{ item.title }}</span>
+            <span v-if="item.type == 'album'" class="subtitle"
+              >Álbum <span class="dot">•</span> {{ item.author }}</span
+            >
+            <span v-else-if="item.type == 'playlist'" class="subtitle"
+              >Lista <span class="dot">•</span> {{ item.author }}</span
+            >
+            <span v-else-if="item.type == 'artist'" class="subtitle">Artista</span>
           </div>
-        </a>
+        </RouterLink>
       </li>
     </ul>
   </ScrollableComponent>
@@ -69,7 +106,7 @@ a:hover {
   background: var(--background-highlight);
 }
 a:visited {
-  color: inherit;
+  /* color: inherit !important; */
 }
 .artist-item img {
   width: 100%;

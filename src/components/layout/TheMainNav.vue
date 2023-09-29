@@ -37,7 +37,7 @@ function switchLibrary() {
       </a>
     </div>
   </nav>
-  <nav v-else :aria-expanded="library.isExpanded" >
+  <nav v-else :aria-expanded="library.isExpanded">
     <div class="top container">
       <div class="item">
         <a href="#">
@@ -85,7 +85,7 @@ nav > .container {
   display: flex;
   flex-direction: column;
 }
-.bottom.container[data-expanded=false] {
+.bottom.container[data-expanded='false'] {
   padding: 8px 0px;
   align-items: center;
 }

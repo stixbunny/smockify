@@ -8,7 +8,7 @@ const props = defineProps<{
 
 <template>
   <div class="card">
-    <img :src="item.img" :alt="item.title + ' img'" loading="lazy">
+    <img :src="item.img" :alt="item.title + ' img'" loading="lazy" />
     <div class="title">{{ item.title }}</div>
     <div class="subtitle">{{ item.subtitle }}</div>
   </div>
@@ -20,7 +20,7 @@ div.card {
   flex-direction: column;
   padding: 16px;
   background-color: var(--background-highlight);
-  transition: background-color .3s ease;
+  transition: background-color 0.3s ease;
   width: 100%;
   height: 100%;
   border-radius: 5px;

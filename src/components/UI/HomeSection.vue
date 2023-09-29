@@ -53,7 +53,7 @@ ul.list {
   --min-container-width: 372px;
   column-gap: var(--section-gap);
   display: grid;
-  grid-template-columns: repeat(var(--column-count),minmax(0,1fr));
+  grid-template-columns: repeat(var(--column-count), minmax(0, 1fr));
   grid-template-rows: 1fr;
   min-width: var(--min-container-width);
   list-style: none;

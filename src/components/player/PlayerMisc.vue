@@ -10,7 +10,7 @@ import ConnectDeviceButton from '../buttons/ConnectDeviceButton.vue';
 
 <template>
   <div id="player-misc" class="player-sub-container">
-    <NowPlayingButton :active="false"/>
+    <NowPlayingButton :active="false" />
     <LyricsButton :active="false" />
     <QueueButton :active="false" />
     <ConnectDeviceButton />

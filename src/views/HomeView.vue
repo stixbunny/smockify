@@ -6,7 +6,6 @@ import WelcomeCard from '@/components/UI/WelcomeCard.vue';
 import { homeSections } from '@/utils/data';
 import HomeSection from '@/components/UI/HomeSection.vue';
 
-
 const home = useHomeStore();
 const content = useContentStore();
 const itemHeight = computed(() => {
@@ -46,7 +45,12 @@ if (date.getHours() >= 5 && date.getHours() < 12) {
         </li>
       </ul>
     </section>
-    <HomeSection v-for="section in homeSections" :title="section.title" :key="section.title" :items="section.items" />
+    <HomeSection
+      v-for="section in homeSections"
+      :title="section.title"
+      :key="section.title"
+      :items="section.items"
+    />
   </div>
 </template>
 

@@ -9,7 +9,7 @@ const bar = ref<HTMLDivElement>();
 function moveVolume(e: MouseEvent) {
   const barSize = bar.value?.getBoundingClientRect().width;
   if (barSize) {
-    const newVolume = e.offsetX / barSize * 100;
+    const newVolume = (e.offsetX / barSize) * 100;
     player.volume = newVolume;
   }
 }

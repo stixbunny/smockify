@@ -8,7 +8,7 @@ type repeatState = false | true | 'once';
 const isRepeating = ref<repeatState>(true);
 
 function repeat() {
-  switch(isRepeating.value) {
+  switch (isRepeating.value) {
     case true:
       isRepeating.value = 'once';
       break;
@@ -22,7 +22,7 @@ function repeat() {
 }
 </script>
 <template>
-  <PlayerControlButton @click="repeat" :class="{'active': isRepeating}">
+  <PlayerControlButton @click="repeat" :class="{ active: isRepeating }">
     <IconRepeat :repeat="isRepeating" />
   </PlayerControlButton>
 </template>

@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import IconQueue from '../icons/IconQueue.vue';
 
 const props = defineProps<{
-  active: boolean,
+  active: boolean;
 }>();
 
 const active = ref(props.active);
@@ -11,10 +11,9 @@ const active = ref(props.active);
 function switchActive() {
   active.value = !active.value;
 }
-
 </script>
 <template>
-  <button :class="{active: active}" @click="switchActive">
+  <button :class="{ active: active }" @click="switchActive">
     <IconQueue />
   </button>
 </template>

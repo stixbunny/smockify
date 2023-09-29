@@ -3,14 +3,13 @@ import { pImg, pArtist, pSongTitle, pSongDuration } from '../../utils/placeholde
 import NowPlaying from '../player/NowPlaying.vue';
 import PlayerControls from '../player/PlayerControls.vue';
 import PlayerMisc from '../player/PlayerMisc.vue';
-
 </script>
 
 <template>
   <div id="player-container">
-    <NowPlaying :style="{'grid-area': 'now-playing'}" />
-    <PlayerControls :style="{'grid-area': 'player-controls'}" />
-    <PlayerMisc :style="{'grid-area': 'player-misc'}" />
+    <NowPlaying :style="{ 'grid-area': 'now-playing' }" />
+    <PlayerControls :style="{ 'grid-area': 'player-controls' }" />
+    <PlayerMisc :style="{ 'grid-area': 'player-misc' }" />
   </div>
 </template>
 
@@ -19,7 +18,7 @@ import PlayerMisc from '../player/PlayerMisc.vue';
   display: grid;
   grid-template-columns: 0.8fr 1fr 0.8fr;
   grid-template-rows: auto;
-  grid-template-areas: "now-playing player-controls player-misc";
+  grid-template-areas: 'now-playing player-controls player-misc';
   gap: 8px;
   align-items: center;
   height: 100%;
@@ -31,8 +30,8 @@ import PlayerMisc from '../player/PlayerMisc.vue';
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto;
     grid-template-areas:
-      "now-playing player-misc"
-      "player-controls player-controls";
+      'now-playing player-misc'
+      'player-controls player-controls';
     gap: 8px;
     justify-items: center;
     align-items: center;

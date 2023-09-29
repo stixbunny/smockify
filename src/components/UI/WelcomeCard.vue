@@ -2,13 +2,13 @@
 const props = defineProps({
   img: { type: String, required: true },
   title: { type: String, required: true },
-})
+});
 </script>
 
 <template>
   <div class="welcome-card">
     <div class="img">
-      <img :src="props.img" :alt="props.title + ' img'">
+      <img :src="props.img" :alt="props.title + ' img'" />
     </div>
     <div class="title">
       {{ props.title }}

@@ -14,18 +14,17 @@
   font-style: italic;
 }
 
-
 @font-face {
   font-family: 'circular';
   src: url('circularstd-light_italic-webfont.woff2') format('woff2');
-  font-weight:200;
+  font-weight: 200;
   font-style: italic;
 }
 
 @font-face {
   font-family: 'circular';
   src: url('circularstd-light-webfont.woff2') format('woff2');
-  font-weight:200;
+  font-weight: 200;
   font-style: normal;
 }
 

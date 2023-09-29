@@ -7,7 +7,7 @@ const player = usePlayerStore();
 
 <template>
   <div id="now-playing" class="player-sub-container">
-    <img :src="player.song.imgUrl">
+    <img :src="player.song.imgUrl" />
     <div class="current-song-info">
       <div class="song-name">{{ player.song.songName }}</div>
       <div class="song-artists">{{ player.song.artistName }}</div>

@@ -21,7 +21,7 @@ import ImgProfile from '../../assets/img/profile.webp';
         <span>Instalar app</span>
       </a>
       <button class="pill-container circular-container">
-        <img :src="ImgProfile" alt="">
+        <img :src="ImgProfile" alt="" />
       </button>
     </div>
   </nav>
@@ -53,7 +53,7 @@ nav {
   background-color: rgba(0, 0, 0, 0.54);
   border-radius: 500px;
 }
-.circular-container{
+.circular-container {
   width: var(--item-height);
 }
 .download {

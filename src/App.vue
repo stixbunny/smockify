@@ -55,7 +55,7 @@ watch(
   width: 100%;
   height: 100dvh;
   display: grid;
-  grid-template-columns: v-bind("nav.widthAsPx") 8px auto;
+  grid-template-columns: v-bind('nav.widthAsPx') 8px auto;
   grid-template-rows: auto 80px;
   grid-template-areas:
     'nav divider content'

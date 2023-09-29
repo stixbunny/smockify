@@ -7,7 +7,6 @@ import { getRoute } from '@/utils/routes';
 
 const library = useLibraryStore();
 const local = useLocalStore();
-
 </script>
 
 <template>

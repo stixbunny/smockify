@@ -1,5 +1,18 @@
 export type VolumePower = 'muted' | 'low' | 'medium' | 'high';
 
+export interface homeSection {
+  title: string,
+  items: cardItem[],
+}
+
+export interface cardItem {
+  img: string,
+  title: string,
+  subtitle: string,
+  id: string,
+  type: 'album' | 'artist' | 'playlist'
+}
+
 export class myLibraryItem {
   id: string;
   title: string;

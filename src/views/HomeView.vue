@@ -1,69 +1,83 @@
 <script lang="ts" setup>
-import { useLocalStore } from '@/stores/local';
 import { useHomeStore } from '@/stores/home';
-import type { onMounted } from 'vue';
+import { useContentStore } from '@/stores/content';
+import { computed, ref } from 'vue';
+import WelcomeCard from '@/components/UI/WelcomeCard.vue';
+import { homeSections } from '@/utils/data';
+import HomeSection from '@/components/UI/HomeSection.vue';
+
 
 const home = useHomeStore();
+const content = useContentStore();
+const itemHeight = computed(() => {
+  if (content.size == 'small' || content.size == 'medium') {
+    return '64px';
+  } else return '80px';
+});
+const itemGap = computed(() => {
+  if (content.size == 'small' || content.size == 'medium') return '8px';
+  if (content.size == 'large') return '12px';
+  if (content.size == 'x-large') return '14px';
+  return '16px';
+});
+const titleMargin = computed(() => {
+  if (content.size == 'small' || content.size == 'medium') return '10px';
+  if (content.size == 'large') return '14px';
+  if (content.size == 'x-large') return '18px';
+  return '22px';
+});
 
 const date = new Date();
 let helloString = '';
-if( date.getHours() >= 5 && date.getHours() < 12) {
+if (date.getHours() >= 5 && date.getHours() < 12) {
   helloString = '¡Buenos dias!';
-} else if(date.getHours() >= 12 && date.getHours() < 6) {
+} else if (date.getHours() >= 12 && date.getHours() < 19) {
   helloString = '¡Buenas tardes!';
 } else helloString = '¡Buenas noches!';
-
 </script>
 
 <template>
-  <section id="welcome">
-    <h1>{{ helloString }}</h1>
-    <ul>
-      <li v-for="item of home.welcomeItems" :key="item.title">
-      {{ item.title }}
-      </li>
-    </ul>
-  </section>
-  
-  <ul>
-    <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, quam!</li>
-    <li>Ut eligendi cupiditate itaque illo earum odit blanditiis ipsa maiores?</li>
-    <li>
-      Doloribus expedita aspernatur minima iusto consequuntur! Voluptatibus ullam earum fugiat!
-    </li>
-    <li>
-      Facilis repellat incidunt dignissimos ut voluptates, provident dolorum consequuntur nam?
-    </li>
-    <li>Facere aut pariatur accusamus temporibus ratione ipsam, iure provident quis.</li>
-    <li>Asperiores natus non sit modi vel alias a, earum quas.</li>
-    <li>Porro cupiditate cumque vero praesentium enim, vel optio incidunt debitis.</li>
-    <li>Aspernatur aut excepturi, dolorum ratione tempora iste corrupti repellendus natus.</li>
-    <li>Amet repellat voluptatum, doloremque omnis optio tempore velit obcaecati assumenda?</li>
-    <li>Nisi reprehenderit ad nulla? Hic consequuntur quam nihil doloremque esse.</li>
-    <li>Quibusdam est quae quos atque. Sit iste neque necessitatibus enim?</li>
-    <li>Quas, doloribus assumenda? Et, facere laboriosam nam voluptas nobis accusantium?</li>
-    <li>Expedita exercitationem cupiditate ut mollitia doloremque officia modi corrupti quam!</li>
-    <li>Veritatis modi nesciunt dolorem voluptate, ut ratione? Id, inventore facere.</li>
-    <li>Minus odit explicabo beatae consequuntur libero quidem eum ullam dignissimos.</li>
-    <li>Corrupti quo a minima animi officia, quibusdam nam architecto at?</li>
-    <li>Aspernatur excepturi cum omnis adipisci possimus dolor consequatur quam doloribus.</li>
-    <li>Cumque quas in consequuntur modi nihil ipsa sapiente veniam aut.</li>
-    <li>Earum, molestiae quam sequi cum animi qui? Soluta, dolore temporibus!</li>
-    <li>Assumenda quod qui numquam in molestias vero ipsum impedit est!</li>
-    <li>Veritatis dolorum sunt et nam consequatur, odio repellendus porro sequi.</li>
-    <li>Velit esse optio doloribus et aliquam magni molestiae odio rem?</li>
-    <li>Debitis maxime sed voluptates nam facere ratione autem voluptatum iusto.</li>
-    <li>Quo quisquam libero, sint eius laudantium dignissimos fuga perspiciatis vero?</li>
-    <li>Saepe consequuntur exercitationem aperiam omnis nihil at quaerat optio iure.</li>
-    <li>Hic placeat nulla eius vitae consectetur dolorem ducimus amet saepe?</li>
-    <li>
-      Dignissimos veritatis in enim molestiae corporis deleniti magnam. Molestiae, recusandae.
-    </li>
-    <li>
-      Voluptatibus necessitatibus consequuntur, doloremque atque excepturi impedit voluptatum facere
-      temporibus.
-    </li>
-  </ul>
+  <div class="home-view">
+    <section id="welcome">
+      <h1>{{ helloString }}</h1>
+      <ul>
+        <li v-for="item of home.welcomeItems" :key="item.title">
+          <WelcomeCard :img="item.img" :title="item.title" />
+        </li>
+      </ul>
+    </section>
+    <HomeSection v-for="section in homeSections" :title="section.title" :key="section.title" :items="section.items" />
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+div.home-view {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+h1 {
+  margin-bottom: v-bind('titleMargin');
+}
+section#welcome > ul {
+  --item-height: v-bind('itemHeight');
+  --min-col-width: 270px;
+  display: grid;
+  grid-template: auto/repeat(auto-fill, minmax(max(var(--min-col-width), 25%), 1fr));
+  gap: v-bind('itemGap');
+  /* grid-template-columns: repeat(v-bind('columns'), auto); */
+  list-style: none;
+  padding-left: 0;
+}
+section#welcome > ul > li {
+  width: 100%;
+  height: var(--item-height);
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+  border-radius: 4px;
+  background-color: var(--background-tinted-highlight);
+}
+section#welcome > ul > li:hover {
+  background-color: hsl(0, 0%, 100%, 0.2);
+}
+</style>

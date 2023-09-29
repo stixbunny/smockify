@@ -5,7 +5,7 @@ import HomeSectionCard from './HomeSectionCard.vue';
 
 const content = useContentStore();
 
-const props = defineProps<{
+defineProps<{
   title: String;
   items: cardItem[];
 }>();

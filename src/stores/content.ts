@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useWindowSize } from '@vueuse/core';
 import { useNavStore } from './nav';
 
@@ -30,7 +30,7 @@ export const useContentStore = defineStore('content', () => {
   });
 
   const maxSecHeight = 420;
-  const minSecHeight = 260;
+  // const minSecHeight = 260;
   const sectionCardRatio = 0.63;
 
   const sectionGap = computed(() => {
@@ -57,10 +57,9 @@ export const useContentStore = defineStore('content', () => {
 
   const sectionColumns = computed(() => {
     const workingSpace = 0.89 * width.value;
-    console.log(`working with ${workingSpace}`);
-    const a = workingSpace / (sectionCardRatio * minSecHeight);
+    // const a = workingSpace / (sectionCardRatio * minSecHeight);
     const b = workingSpace / (sectionCardRatio * maxSecHeight);
-    const aResult = Math.floor(a);
+    // const aResult = Math.floor(a);
     const bResult = Math.ceil(b);
     // if(aResult === bResult) return aResult;
     return bResult;
@@ -74,5 +73,21 @@ export const useContentStore = defineStore('content', () => {
     return Math.floor(result);
   });
 
-  return { width, xPadding, size, colWidth, sectionColumns, sectionGap, sectionGapAsPx };
+  type RGBcolor = {
+    red: number,
+    green: number,
+    blue: number,
+  }
+
+  function createColorString(color: RGBcolor){
+    return `rgb(${color.red}, ${color.green}, ${color.blue})`;
+  }
+
+  const selectedColor = ref(createColorString({ red: 72, green: 32, blue: 176}));
+
+  function setColor(red: number, green: number, blue: number){
+    selectedColor.value = createColorString({red, green, blue});
+  }
+
+  return { width, xPadding, size, colWidth, sectionColumns, sectionGap, sectionGapAsPx, setColor, selectedColor };
 });

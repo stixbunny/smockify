@@ -3,10 +3,14 @@ import IconArrowLeft from '../icons/IconArrowLeft.vue';
 import IconArrowRight from '../icons/IconArrowRight.vue';
 import IconDownload from '../icons/IconDownload.vue';
 import ImgProfile from '../../assets/img/profile.webp';
+
+defineProps<{
+  notTransparent: boolean
+}>();
 </script>
 
 <template>
-  <nav>
+  <nav :data-visible="notTransparent">
     <div class="content-navigation">
       <a class="pill-container circular-container">
         <IconArrowLeft />
@@ -40,6 +44,12 @@ nav {
   left: 0px;
   right: 0px;
   --item-height: 32px;
+  z-index: 10;
+
+  transition: background-color .25s;
+}
+nav[data-visible="true"] {
+  background-color: var(--accent-color);
 }
 .pill-container {
   display: flex;

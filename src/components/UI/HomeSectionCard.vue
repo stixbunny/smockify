@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { cardItem } from '@/types';
 
-const props = defineProps<{
+defineProps<{
   item: cardItem;
 }>();
 </script>

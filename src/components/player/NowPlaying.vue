@@ -28,6 +28,7 @@ const player = usePlayerStore();
 }
 img {
   height: 100%;
+  aspect-ratio: 1/1;
   border-radius: 4px;
 }
 .song-name {

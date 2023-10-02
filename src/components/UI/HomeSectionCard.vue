@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import type { cardItem } from '@/types';
+import { getRoute } from '../../utils/routes';
+import { RouterLink } from 'vue-router';
 
 defineProps<{
   item: cardItem;
@@ -7,11 +9,13 @@ defineProps<{
 </script>
 
 <template>
-  <div class="card">
-    <img :src="item.img" :alt="item.title + ' img'" loading="lazy" />
-    <div class="title">{{ item.title }}</div>
-    <div class="subtitle">{{ item.subtitle }}</div>
-  </div>
+  <RouterLink :to="getRoute(item.id, item.type)">
+    <div class="card">
+      <img :src="item.img" :alt="item.title + ' img'" loading="lazy" />
+      <div class="title">{{ item.title }}</div>
+      <div class="subtitle">{{ item.subtitle }}</div>
+    </div>
+  </RouterLink>
 </template>
 
 <style scoped>

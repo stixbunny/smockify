@@ -4,6 +4,7 @@ const ArtistView = () => import('@/views/ArtistView.vue');
 const AlbumView = () => import('@/views/AlbumView.vue');
 const SongView = () => import('@/views/SongView.vue');
 const PlaylistView = () => import('@/views/PlaylistView.vue');
+const SearchView = () => import('@/views/SearchView.vue');
 const NotFound = () => import('@/views/NotFoundView.vue');
 
 const router = createRouter({
@@ -42,6 +43,11 @@ const router = createRouter({
       component: PlaylistView,
       props: true,
       name: 'playlist',
+    },
+    {
+      path: '/search',
+      component: SearchView,
+      name: 'search',
     },
     {
       name: 'not-found',

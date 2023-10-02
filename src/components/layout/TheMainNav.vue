@@ -6,6 +6,7 @@ import IconSearch from '../icons/IconSearch.vue';
 import IconLibrary from '../icons/IconLibrary.vue';
 import MyLibrary from '../nav/MyLibrary.vue';
 import { useLibraryStore } from '@/stores/library';
+import { RouterLink } from 'vue-router';
 
 const library = useLibraryStore();
 
@@ -40,16 +41,16 @@ function switchLibrary() {
   <nav v-else :aria-expanded="library.isExpanded">
     <div class="top container">
       <div class="item">
-        <a href="#">
+        <RouterLink :to="{ name: 'home' }">
           <IconHome />
           <span v-if="library.isExpanded">Inicio</span>
-        </a>
+        </RouterLink>
       </div>
       <div class="item">
-        <a href="#">
+        <RouterLink :to="{ name: 'search' }">
           <IconSearch />
           <span v-if="library.isExpanded">Buscar</span>
-        </a>
+        </RouterLink>
       </div>
     </div>
     <div class="bottom container" :data-expanded="library.isExpanded">

@@ -8,6 +8,7 @@ import { useMediaQuery } from '@vueuse/core';
 import { watch } from 'vue';
 import { useLibraryStore } from '@/stores/library';
 import { useNavStore } from './stores/nav';
+import NotYedImplemented from './components/NotYedImplemented.vue';
 
 const library = useLibraryStore();
 const nav = useNavStore();
@@ -28,13 +29,14 @@ watch(
 
 <template>
   <div id="app-container" ref="appContainer" v-if="isMobile">
-    <main>
+    <!-- <main>
       <TheContent />
       <ThePlayer />
     </main>
     <footer>
       <TheMainNav />
-    </footer>
+    </footer> -->
+    <NotYedImplemented />
   </div>
   <div id="app-container" ref="appContainer" v-else>
     <header>
@@ -94,7 +96,7 @@ footer {
     bottom: 0px;
     height: 80px;
   }
-  .app-container {
+  #app-container {
     position: relative;
     display: block;
     height: 100%;

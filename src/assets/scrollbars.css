@@ -22,11 +22,11 @@
   /* // The border radius of the scrollbar handle */
   --os-handle-border-radius: 0;
   /* // The background of the scrollbar handle */
-  --os-handle-bg: hsla(0,0%,100%,.3);
+  --os-handle-bg: hsla(0, 0%, 100%, 0.3);
   /* // The :hover background of the scrollbar handle */
-  --os-handle-bg-hover: hsla(0,0%,100%,.5);
+  --os-handle-bg-hover: hsla(0, 0%, 100%, 0.5);
   /* // The :active background of the scrollbar handle */
-  --os-handle-bg-active: hsla(0,0%,100%,.7);
+  --os-handle-bg-active: hsla(0, 0%, 100%, 0.7);
   /* // The border of the scrollbar handle */
   --os-handle-border: none;
   /* // The :hover border of the scrollbar handle */

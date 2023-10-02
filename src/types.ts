@@ -1,19 +1,53 @@
 export type VolumePower = 'muted' | 'low' | 'medium' | 'high';
 
+export interface homeSection {
+  title: string;
+  items: cardItem[];
+}
+
+export interface cardItem {
+  img: string;
+  title: string;
+  subtitle: string;
+  id: string;
+  type: 'album' | 'artist' | 'playlist';
+}
+
+export class myLibraryItem {
+  id: string;
+  title: string;
+  author: string;
+  img: string;
+  type: 'song' | 'album' | 'artist' | 'playlist';
+  constructor(
+    id: string,
+    title: string,
+    author: string,
+    img: string,
+    type: 'song' | 'album' | 'artist' | 'playlist'
+  ) {
+    this.id = id;
+    this.title = title;
+    this.author = author;
+    this.img = img;
+    this.type = type;
+  }
+}
+
 export interface currentSong {
-  songId: string,
-  artistId: string,
-  albumId: string,
-  songName: string,
-  artistName: string,
-  duration_ms: number,
-  explicit: boolean,
-  isLiked: boolean,
-  imgUrl: string,
+  songId: string;
+  artistId: string;
+  albumId: string;
+  songName: string;
+  artistName: string;
+  duration_ms: number;
+  explicit: boolean;
+  isLiked: boolean;
+  imgUrl: string;
 }
 
 export interface SimpleSongValue {
-  id: string,
+  id: string;
   album_id: string;
   disc_number: number;
   duration_ms: number;
@@ -24,11 +58,11 @@ export interface SimpleSongValue {
   liked: boolean;
 }
 
-export type SimpleSong= Map<string, SimpleSongValue>;
+export type SimpleSong = Map<string, SimpleSongValue>;
 
 export interface SimpleSongArtist {
-  artist_id: string,
-  song_id: string,
+  artist_id: string;
+  song_id: string;
 }
 
 export interface SimpleAlbumValue {
@@ -40,7 +74,7 @@ export interface SimpleAlbumValue {
   liked: boolean;
 }
 
-export type SimpleAlbum= Map<string, SimpleAlbumValue>;
+export type SimpleAlbum = Map<string, SimpleAlbumValue>;
 
 export interface SimpleAlbumArtist {
   artist_id: string;

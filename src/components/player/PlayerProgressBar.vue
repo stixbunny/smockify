@@ -7,9 +7,9 @@ const bar = ref<HTMLDivElement>();
 
 function moveTrack(e: MouseEvent) {
   const barSize = bar.value?.getBoundingClientRect().width;
-  if(barSize) {
-    const newTiming = e.offsetX/barSize;
-    console
+  if (barSize) {
+    const newTiming = e.offsetX / barSize;
+    console;
     player.setTiming(newTiming);
   }
 }

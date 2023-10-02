@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import IconLyrics from '../icons/IconLyrics.vue';
 
 const props = defineProps<{
-  active: boolean,
+  active: boolean;
 }>();
 
 const active = ref(props.active);
@@ -11,10 +11,9 @@ const active = ref(props.active);
 function switchActive() {
   active.value = !active.value;
 }
-
 </script>
 <template>
-  <button :class="{active: active}" @click="switchActive">
+  <button :class="{ active: active }" @click="switchActive">
     <IconLyrics />
   </button>
 </template>

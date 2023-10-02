@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import IconFullScreen from '../icons/IconFullScreen.vue';
-
 </script>
 <template>
   <button>

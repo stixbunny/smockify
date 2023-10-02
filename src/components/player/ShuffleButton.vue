@@ -6,11 +6,11 @@ import { ref } from 'vue';
 const isShuffling = ref(false);
 
 function shuffle() {
-  isShuffling.value = !isShuffling.value
+  isShuffling.value = !isShuffling.value;
 }
 </script>
 <template>
-  <PlayerControlButton @click="shuffle" :class="{'active': isShuffling}">
+  <PlayerControlButton @click="shuffle" :class="{ active: isShuffling }">
     <IconShuffle :active="isShuffling" />
   </PlayerControlButton>
 </template>

@@ -5,15 +5,13 @@ import { usePlayerStore } from '@/stores/player';
 const player = usePlayerStore();
 
 function switchVolume() {
-  if(player.volumePower != 'muted') {
+  if (player.volumePower != 'muted') {
     player.lastSavedVolume = player.volume;
     player.volume = 0;
-  }
-  else {
+  } else {
     player.volume = player.lastSavedVolume;
   }
 }
-
 </script>
 <template>
   <button @click="switchVolume">

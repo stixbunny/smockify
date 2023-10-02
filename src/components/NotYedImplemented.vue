@@ -1,10 +1,7 @@
 <script lang="ts" setup>
-import { withDefaults } from 'vue';
-
 interface Props {
   message?: string,
 }
-
 const props = withDefaults(defineProps<Props>(), {
   message: 'Lo siento, esto aún no ha sido implementado.',
 });

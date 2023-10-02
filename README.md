@@ -1,52 +1,35 @@
 # smockify
 
-This template should help get you started developing with Vue 3 in Vite.
+Hi! This was my attempt at making a functional Spotify UI copy. It's motivation being learning more about frontend web development as a whole and deepen my Vue and CSS knowledge. I also managed to learn more about Typescript and consuming APIs although the final product doesn't use them yet.
 
-## Recommended IDE Setup
+## How it went
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+I had plenty of problems trying to achieve this. My starting goal was far too ambitious. I decided I was going to use supabase as a means to permanently save Spotify data to not make a request twice. I soon learned the time to do this was way too long for the user experience, so I had to ditch the plans for an external database.
 
-## Type Support for `.vue` Imports in TS
+I then tried keeping up the same database of requested data locally, but it too proved to be a bad idea. Timing was still not at its best and the memory used by the app was also very high.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+I finally, after a couple of weeks , had to resort to using a static database for items first loading into the website; that is, the personal library in the navbar and the items in the homepage. My plans for the future include implementing each artist/album/playlist/etc dynamic page, built with each Spotify API query.
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+As for the front end, I strived to be as close as possible to the real thing. However I still had a difficult time with a couple of things such a dragging elements like the navbar and the volume and play bar. They do work as of now, but I could implement more improvements in the near future.
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+## What works
 
-## Customize configuration
+- Right now each button interacts like the original version, although most don't work. Only the library button expands and compresses the navbar and the home and search both redirect to their respective pages.
+- There is no filtering in the side library, but there is a scrollbar for the items, al well as in the homepage. Both look and function just like the original.
+- The homepage reacts with the short list of items at the start, changing color depending on the main color of the picture.
+- Each list of items adjusts dynamically depending on how many it can fit comfortably on the screen.
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+## What doesn't
 
-## Project Setup
+- LIke I said before, each detailed view for artist, album, playlist, song and podcast isn't implemented yet, so there's a placeholder page for each.
+- There's no filtering for the navbar library.
+- You can't drag neither the volume nor the play bar. Although both can be clicked and it's element react accordingly.
+- There's no playing of the song, as in advancing it's time nor there's a local playlist to cycle through the items.
 
-```sh
-npm install
-```
+## Final words
 
-### Compile and Hot-Reload for Development
+It was fun! And I sure did learn a lot. I wasted too much time scaling down the project and there's a lot of code that got dumped or is unused as a result.
 
-```sh
-npm run dev
-```
+I'd love to como back to this to at least implement each detail view.
 
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+Thanks for checking it out!

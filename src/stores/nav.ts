@@ -1,12 +1,8 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
-import {
-  minHeaderWidth,
-  minContentWidth,
-  navMinimizedWidth
-} from '@/utils/styles';
+import { minHeaderWidth, minContentWidth, navMinimizedWidth } from '@/utils/styles';
 import { useWindowSize } from '@vueuse/core';
-useWindowSize
+useWindowSize;
 
 export const useNavStore = defineStore('nav', () => {
   // const isExpanded = ref(true);
@@ -23,5 +19,13 @@ export const useNavStore = defineStore('nav', () => {
   const { width: windowWidth } = useWindowSize();
   const maxWidth = windowWidth.value - contentSpace;
 
-  return { minExpandedWidth, minimizedWidth, contentSpace, width, widthAsPx, lastSavedExpandedWidth, maxWidth };
+  return {
+    minExpandedWidth,
+    minimizedWidth,
+    contentSpace,
+    width,
+    widthAsPx,
+    lastSavedExpandedWidth,
+    maxWidth,
+  };
 });

@@ -3,7 +3,7 @@ import placeholderImg from '../assets/img/placeholderimg.jpg';
 export const pImg = placeholderImg;
 export const pArtist = 'Gorillaz Placeholder';
 export const pAlbum = 'Gorillaz';
-export const pAlbumYear = new Date("2001-05-26");
+export const pAlbumYear = new Date('2001-05-26');
 export const pSongTitle = 'Clint Eastwood';
 export const pSongDuration = '340000'; //in ms 5:40
 export const pLyric = `I ain't happy, I'm feeling glad
@@ -83,4 +83,4 @@ My future
 It's coming on, it's coming on, it's coming on
 My future
 It's coming on, it's coming on, it's coming on
-My future`
+My future`;

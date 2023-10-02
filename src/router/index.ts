@@ -4,6 +4,7 @@ const ArtistView = () => import('@/views/ArtistView.vue');
 const AlbumView = () => import('@/views/AlbumView.vue');
 const SongView = () => import('@/views/SongView.vue');
 const PlaylistView = () => import('@/views/PlaylistView.vue');
+const SearchView = () => import('@/views/SearchView.vue');
 const NotFound = () => import('@/views/NotFoundView.vue');
 
 const router = createRouter({
@@ -22,22 +23,31 @@ const router = createRouter({
     {
       path: '/artist/:id',
       component: ArtistView,
+      props: true,
       name: 'artist',
     },
     {
       path: '/album/:id',
       component: AlbumView,
+      props: true,
       name: 'album',
     },
     {
       path: '/song/:id',
       component: SongView,
+      props: true,
       name: 'song',
     },
     {
       path: '/playlist/:id',
       component: PlaylistView,
+      props: true,
       name: 'playlist',
+    },
+    {
+      path: '/search',
+      component: SearchView,
+      name: 'search',
     },
     {
       name: 'not-found',

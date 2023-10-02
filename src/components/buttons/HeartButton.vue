@@ -6,9 +6,9 @@ import { useLocalStore } from '@/stores/local';
 const local = useLocalStore();
 
 const props = defineProps<{
-  id: string,
-  type: 'album' | 'playlist' | 'song' | 'artist',
-  liked: boolean,
+  id: string;
+  type: 'album' | 'playlist' | 'song' | 'artist';
+  liked: boolean;
 }>();
 
 const isLiked = ref(props.liked);
@@ -17,10 +17,9 @@ function switchLike() {
   isLiked.value = !isLiked.value;
   local.switchLike(props.id, props.type);
 }
-
 </script>
 <template>
-  <button :class="{liked: isLiked}" @click="switchLike">
+  <button :class="{ liked: isLiked }" @click="switchLike">
     <IconHeart :liked="isLiked" />
   </button>
 </template>

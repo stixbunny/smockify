@@ -8,10 +8,9 @@ const nav = useNavStore();
 const isDividerDragging = ref(false);
 
 function clickingDivider() {
-  if(library.isExpanded) {
+  if (library.isExpanded) {
     isDividerDragging.value = true;
-  } 
-  else {
+  } else {
     library.isExpanded = true;
   }
 }
@@ -27,11 +26,11 @@ document.addEventListener('mouseup', (e: MouseEvent) => {
 });
 
 document.addEventListener('mousemove', (e: MouseEvent) => {
-  if(!isDividerDragging.value) {
+  if (!isDividerDragging.value) {
     return;
   }
-  if(library.isExpanded) {
-    if(e.clientX < nav.minExpandedWidth - 8) {
+  if (library.isExpanded) {
+    if (e.clientX < nav.minExpandedWidth - 8) {
       isDividerDragging.value = false;
       library.isExpanded = false;
       return;
@@ -43,7 +42,6 @@ document.addEventListener('mousemove', (e: MouseEvent) => {
     nav.width = e.clientX;
   }
 });
-
 </script>
 
 <template>

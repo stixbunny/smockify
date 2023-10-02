@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import IconConnectDevice from '../icons/IconConnectDevice.vue';
-
 </script>
 <template>
   <button>

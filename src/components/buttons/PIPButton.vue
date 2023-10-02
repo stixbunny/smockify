@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import IconPIP from '../icons/IconPIP.vue';
-
 </script>
 <template>
   <button>

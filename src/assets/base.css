@@ -8,9 +8,9 @@
   --background-elevated-base: #242424;
   --background-elevated-highlight: #2a2a2a;
   --background-elevated-press: #000;
-  --background-tinted-base: hsla(0,0%,100%,.07);
-  --background-tinted-highlight: hsla(0,0%,100%,.1);
-  --background-tinted-press: hsla(0,0%,100%,.04);
+  --background-tinted-base: hsla(0, 0%, 100%, 0.07);
+  --background-tinted-highlight: hsla(0, 0%, 100%, 0.1);
+  --background-tinted-press: hsla(0, 0%, 100%, 0.04);
   --background-unsafe-for-small-text-base: #121212;
   --background-unsafe-for-small-text-highlight: #121212;
   --background-unsafe-for-small-text-press: #121212;
@@ -78,8 +78,8 @@ body {
   background: var(--background-press);
   transition: color 0.5s, background-color 0.5s;
   line-height: 1.6;
-  font-family: 'circular', Gotham, Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'circular', Gotham, Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

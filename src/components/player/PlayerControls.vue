@@ -26,9 +26,9 @@ const player = usePlayerStore();
       </div>
     </div>
     <div class="bottom">
-      <div class="elapsed">{{player.elapsedTime}}</div>
+      <div class="elapsed">{{ player.elapsedTime }}</div>
       <PlayerProgressBar />
-      <div class="total">{{player.totalTime}}</div>
+      <div class="total">{{ player.totalTime }}</div>
     </div>
   </div>
 </template>

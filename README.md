@@ -1,6 +1,6 @@
 # smockify
 
-Hi! This was my attempt at making a functional Spotify UI copy. It's motivation being learning more about frontend web development as a whole and deepen my Vue and CSS knowledge. I also managed to learn more about Typescript and consuming APIs although the final product doesn't use them yet.
+Hi! This was my attempt at making a functional Spotify UI copy. Its motivation being learning more about frontend web development as a whole and deepen my Vue and CSS knowledge. I also managed to learn more about Typescript and consuming APIs although the final product doesn't use them yet.
 
 ## How it went
 

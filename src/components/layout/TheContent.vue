@@ -21,7 +21,7 @@ function scrolling(height: number) {
 <template>
   <div ref="el">
     <ContentNav :not-transparent="notTransparent" />
-    <RouterView v-slot="slotProps">
+    <RouterView v-slot="slotProps" :key="$route.fullPath">
       <Suspense>
         <ScrollableComponent @scroll="(el) => scrolling(el)">
           <ContentView>

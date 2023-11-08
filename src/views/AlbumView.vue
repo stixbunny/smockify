@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import NotYedImplemented from '@/components/NotYedImplemented.vue';
+import NotYetImplemented from '@/components/NotYetImplemented.vue';
 </script>
 
 <template>
-  <NotYedImplemented />
+  <NotYetImplemented />
 </template>

@@ -8,7 +8,7 @@ import { useMediaQuery } from '@vueuse/core';
 import { watch } from 'vue';
 import { useLibraryStore } from '@/stores/library';
 import { useNavStore } from './stores/nav';
-import NotYedImplemented from './components/NotYedImplemented.vue';
+import NotYetImplemented from '@/components/NotYetImplemented.vue';
 
 const library = useLibraryStore();
 const nav = useNavStore();
@@ -36,7 +36,7 @@ watch(
     <footer>
       <TheMainNav />
     </footer> -->
-    <NotYedImplemented />
+    <NotYetImplemented message="Lo siento, la versión móvil aún no ha sido implementada."/>
   </div>
   <div id="app-container" ref="appContainer" v-else>
     <header>

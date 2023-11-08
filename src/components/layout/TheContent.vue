@@ -12,7 +12,6 @@ const el = ref<HTMLElement | null>(null);
 const notTransparent = ref(false);
 
 function scrolling(height: number) {
-  console.log(height);
   if (height > 350) {
     notTransparent.value = true;
   } else notTransparent.value = false;

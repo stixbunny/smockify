@@ -13,22 +13,23 @@ const notTransparent = ref(false);
 
 function scrolling(height: number) {
   console.log(height);
-  if(height > 350) {
+  if (height > 350) {
     notTransparent.value = true;
   } else notTransparent.value = false;
 }
-
 </script>
 
 <template>
   <div ref="el">
     <ContentNav :not-transparent="notTransparent" />
     <RouterView v-slot="slotProps">
-      <ScrollableComponent @scroll="(el) => scrolling(el)">
-        <ContentView>
-          <Component :is="slotProps.Component" />
-        </ContentView>
-      </ScrollableComponent>
+      <Suspense>
+        <ScrollableComponent @scroll="(el) => scrolling(el)">
+          <ContentView>
+            <Component :is="slotProps.Component" />
+          </ContentView>
+        </ScrollableComponent>
+      </Suspense>
     </RouterView>
   </div>
 </template>
@@ -40,7 +41,6 @@ div {
   position: relative;
   /* padding-inline: 16px; */
   isolation: isolate;
-  
 
   --accent-color: v-bind('content.selectedColor');
   --nav-opacity: 0;

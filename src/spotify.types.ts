@@ -75,6 +75,10 @@ export interface ArtistResponse {
   uri: string;
 }
 
+export interface ArtistTopTracksResponse {
+  tracks: TrackResponse[];
+}
+
 export interface PlaylistResponse {
   collaborative: boolean;
   description: string;

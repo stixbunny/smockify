@@ -54,3 +54,10 @@ export interface artistTopTrack {
   explicit: boolean;
   imgUrl: string;
 }
+
+export interface artist {
+  id: string;
+  name: string;
+  genres: string[];
+  image: string; //can be zero
+}

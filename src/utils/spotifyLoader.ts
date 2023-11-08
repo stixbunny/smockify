@@ -54,15 +54,13 @@ async function getArtist(id: string): Promise<artist | null> {
   }
 }
 
-async function getArtistAlbums(
-  id: string
-): Promise<{
+async function getArtistAlbums(id: string): Promise<{
   albums: artistItem[];
   singles: artistItem[];
   appearsOn: artistItem[];
   compilations: artistItem[];
 } | null> {
-  const url = `https://api.spotify.com/v1/artists/${id}/albums`;
+  const url = `https://api.spotify.com/v1/artists/${id}/albums?limit=50&offset=0&market=ES`;
   const authOptions = {
     method: 'GET',
     headers: {
@@ -84,6 +82,7 @@ async function getArtistAlbums(
         image: Object.hasOwn(entry, 'images') ? entry.images.slice(-1)[0].url : '',
         type: itemType,
       };
+      console.log(`found ${item.name} in ${itemType}`);
       switch (itemType) {
         case 'album':
           albums.push(item);

@@ -7,6 +7,7 @@ const props = defineProps({
 });
 
 const { topTracks, artist, artistItems } = await loadArtist(props.id);
+console.log(artistItems)
 </script>
 
 <template>

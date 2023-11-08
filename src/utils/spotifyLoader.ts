@@ -54,13 +54,12 @@ async function getArtist(id: string): Promise<artist | null> {
   }
 }
 
-async function getArtistAlbums(id: string): Promise<{
-  albums: artistItem[];
-  singles: artistItem[];
-  appearsOn: artistItem[];
-  compilations: artistItem[];
-} | null> {
-  const url = `https://api.spotify.com/v1/artists/${id}/albums?limit=50&offset=0&market=ES`;
+async function getArtistItems(
+  id: string,
+  type: 'album' | 'single' | 'appears_on' | 'compilation',
+  limit = 10
+): Promise<artistItem[] | null> {
+  const url = `https://api.spotify.com/v1/artists/${id}/albums?include_groups=${type}&limit=${limit}&offset=0&market=ES`;
   const authOptions = {
     method: 'GET',
     headers: {
@@ -70,10 +69,7 @@ async function getArtistAlbums(id: string): Promise<{
   const response = await fetch(url, authOptions);
   if (response.ok) {
     const json: AlbumsResponse = await response.json();
-    const albums: artistItem[] = [];
-    const singles: artistItem[] = [];
-    const appearsOn: artistItem[] = [];
-    const compilations: artistItem[] = [];
+    const items: artistItem[] = [];
     json.items.forEach((entry) => {
       const itemType = entry.album_group;
       const item: artistItem = {
@@ -83,22 +79,9 @@ async function getArtistAlbums(id: string): Promise<{
         type: itemType,
       };
       console.log(`found ${item.name} in ${itemType}`);
-      switch (itemType) {
-        case 'album':
-          albums.push(item);
-          break;
-        case 'single':
-          singles.push(item);
-          break;
-        case 'appears_on':
-          appearsOn.push(item);
-          break;
-        case 'compilation':
-          compilations.push(item);
-          break;
-      }
+      items.push(item);
     });
-    return { albums, singles, appearsOn, compilations };
+    return items;
   } else {
     return null;
   }
@@ -107,6 +90,25 @@ async function getArtistAlbums(id: string): Promise<{
 export async function loadArtist(id: string) {
   const topTracks = await getArtistTopTracks(id);
   const artist = await getArtist(id);
-  const artistItems = await getArtistAlbums(id);
-  return { topTracks, artist, artistItems };
+  const albums = await getArtistItems(id, 'album');
+  const singles = await getArtistItems(id, 'single');
+  const compilations = await getArtistItems(id, 'compilation');
+  const appearsOn = await getArtistItems(id, 'appears_on');
+
+  const discography = {
+    albums: {
+      name: 'Álbumes',
+      content: albums,
+    },
+    singles: {
+      name: 'Sencillos y EP',
+      content: singles,
+    },
+    compilations: {
+      name: 'Recopilatorios',
+      content: compilations,
+    },
+  };
+
+  return { topTracks, artist, discography, appearsOn };
 }

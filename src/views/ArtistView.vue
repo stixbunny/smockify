@@ -6,12 +6,15 @@ const props = defineProps({
   id: { type: String, required: true },
 });
 
-const { topTracks, artist } = await loadArtist(props.id);
+const { topTracks, artist, artistItems } = await loadArtist(props.id);
 </script>
 
 <template>
   <h1>{{ artist?.name }}</h1>
   <ul>
     <li v-for="track in topTracks" :key="track.songId">{{ track.songName }}</li>
+  </ul>
+  <ul v-for="(items, name) in artistItems" :key="name">
+    <li v-for="item in items" :key="item.id">{{ item.name }}</li>
   </ul>
 </template>

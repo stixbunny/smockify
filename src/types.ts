@@ -61,3 +61,10 @@ export interface artist {
   genres: string[];
   image: string; //can be zero
 }
+
+export interface artistItem {
+  name: string;
+  id: string;
+  image: string;
+  type: 'album' | 'single' | 'appears_on' | 'compilation';
+}

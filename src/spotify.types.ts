@@ -122,7 +122,7 @@ export interface AlbumAlbums {
   type: string;
   uri: string;
   artists: Artist[];
-  album_group: string;
+  album_group: 'album' | 'single' | 'appears_on' | 'compilation';
 }
 
 export interface Artist {

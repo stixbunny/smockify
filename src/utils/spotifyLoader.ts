@@ -1,6 +1,6 @@
 import { useMainStore } from '@/stores/main';
-import type { ArtistTopTracksResponse, ArtistResponse } from '@/spotify.types';
-import type { artistTopTrack, artist } from '@/types';
+import type { ArtistTopTracksResponse, ArtistResponse, AlbumsResponse } from '@/spotify.types';
+import type { artistTopTrack, artist, artistItem } from '@/types';
 
 const { access_token } = useMainStore();
 
@@ -54,8 +54,60 @@ async function getArtist(id: string): Promise<artist | null> {
   }
 }
 
+async function getArtistAlbums(
+  id: string
+): Promise<{
+  albums: artistItem[];
+  singles: artistItem[];
+  appearsOn: artistItem[];
+  compilations: artistItem[];
+} | null> {
+  const url = `https://api.spotify.com/v1/artists/${id}/albums`;
+  const authOptions = {
+    method: 'GET',
+    headers: {
+      Authorization: 'Bearer ' + access_token,
+    },
+  };
+  const response = await fetch(url, authOptions);
+  if (response.ok) {
+    const json: AlbumsResponse = await response.json();
+    const albums: artistItem[] = [];
+    const singles: artistItem[] = [];
+    const appearsOn: artistItem[] = [];
+    const compilations: artistItem[] = [];
+    json.items.forEach((entry) => {
+      const itemType = entry.album_group;
+      const item: artistItem = {
+        name: entry.name,
+        id: entry.id,
+        image: Object.hasOwn(entry, 'images') ? entry.images[-1].url : '',
+        type: itemType,
+      };
+      switch (itemType) {
+        case 'album':
+          albums.push(item);
+          break;
+        case 'single':
+          singles.push(item);
+          break;
+        case 'appears_on':
+          appearsOn.push(item);
+          break;
+        case 'compilation':
+          compilations.push(item);
+          break;
+      }
+    });
+    return { albums, singles, appearsOn, compilations };
+  } else {
+    return null;
+  }
+}
+
 export async function loadArtist(id: string) {
   const topTracks = await getArtistTopTracks(id);
   const artist = await getArtist(id);
-  return { topTracks, artist };
+  const artistItems = await getArtistAlbums(id);
+  return { topTracks, artist, artistItems };
 }

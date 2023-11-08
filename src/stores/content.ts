@@ -74,20 +74,30 @@ export const useContentStore = defineStore('content', () => {
   });
 
   type RGBcolor = {
-    red: number,
-    green: number,
-    blue: number,
-  }
+    red: number;
+    green: number;
+    blue: number;
+  };
 
-  function createColorString(color: RGBcolor){
+  function createColorString(color: RGBcolor) {
     return `rgb(${color.red}, ${color.green}, ${color.blue})`;
   }
 
-  const selectedColor = ref(createColorString({ red: 72, green: 32, blue: 176}));
+  const selectedColor = ref(createColorString({ red: 72, green: 32, blue: 176 }));
 
-  function setColor(red: number, green: number, blue: number){
-    selectedColor.value = createColorString({red, green, blue});
+  function setColor(red: number, green: number, blue: number) {
+    selectedColor.value = createColorString({ red, green, blue });
   }
 
-  return { width, xPadding, size, colWidth, sectionColumns, sectionGap, sectionGapAsPx, setColor, selectedColor };
+  return {
+    width,
+    xPadding,
+    size,
+    colWidth,
+    sectionColumns,
+    sectionGap,
+    sectionGapAsPx,
+    setColor,
+    selectedColor,
+  };
 });

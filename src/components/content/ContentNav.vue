@@ -5,7 +5,7 @@ import IconDownload from '../icons/IconDownload.vue';
 import ImgProfile from '../../assets/img/profile.webp';
 
 defineProps<{
-  notTransparent: boolean
+  notTransparent: boolean;
 }>();
 </script>
 
@@ -46,9 +46,9 @@ nav {
   --item-height: 32px;
   z-index: 10;
 
-  transition: background-color .25s;
+  transition: background-color 0.25s;
 }
-nav[data-visible="true"] {
+nav[data-visible='true'] {
   background-color: var(--accent-color);
 }
 .pill-container {

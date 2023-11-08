@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 interface Props {
-  message?: string,
+  message?: string;
 }
 const props = withDefaults(defineProps<Props>(), {
   message: 'Lo siento, esto aún no ha sido implementado.',

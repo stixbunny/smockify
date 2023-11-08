@@ -42,7 +42,7 @@ if (date.getHours() >= 5 && date.getHours() < 12) {
       <h1>{{ helloString }}</h1>
       <ul>
         <li v-for="item of home.welcomeItems" :key="item.title">
-          <WelcomeCard :img="item.img" :title="item.title"/>
+          <WelcomeCard :img="item.img" :title="item.title" />
         </li>
       </ul>
     </section>

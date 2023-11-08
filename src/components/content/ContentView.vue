@@ -2,9 +2,6 @@
 import { useContentStore } from '@/stores/content';
 
 const content = useContentStore();
-
-
-
 </script>
 
 <template>

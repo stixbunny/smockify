@@ -81,7 +81,7 @@ async function getArtistAlbums(
       const item: artistItem = {
         name: entry.name,
         id: entry.id,
-        image: Object.hasOwn(entry, 'images') ? entry.images[-1].url : '',
+        image: Object.hasOwn(entry, 'images') ? entry.images.slice(-1)[0].url : '',
         type: itemType,
       };
       switch (itemType) {

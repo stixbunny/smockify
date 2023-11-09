@@ -1,5 +1,10 @@
 import { useMainStore } from '@/stores/main';
-import type { ArtistTopTracksResponse, ArtistResponse, AlbumsResponse } from '@/spotify.types';
+import type {
+  ArtistTopTracksResponse,
+  ArtistResponse,
+  AlbumsResponse,
+  RelatedArtistsResponse,
+} from '@/spotify.types';
 import type { artistTopTrack, artist, artistItem } from '@/types';
 
 const { access_token } = useMainStore();
@@ -45,7 +50,7 @@ async function getArtist(id: string): Promise<artist | null> {
     const artist: artist = {
       id: json.id,
       name: json.name,
-      image: json.images ? json.images[0].url : '',
+      image: Object.hasOwn(json, 'images') ? json.images.slice(-1)[0].url : '',
       genres: json.genres,
     };
     return artist;
@@ -78,7 +83,6 @@ async function getArtistItems(
         image: Object.hasOwn(entry, 'images') ? entry.images.slice(-1)[0].url : '',
         type: itemType,
       };
-      console.log(`found ${item.name} in ${itemType}`);
       items.push(item);
     });
     return items;
@@ -87,9 +91,36 @@ async function getArtistItems(
   }
 }
 
+async function getArtistRelatedArtists(id: string, maxArtists=10): Promise<artist[] | null> {
+  const url = `https://api.spotify.com/v1/artists/${id}/related-artists`;
+  const authOptions = {
+    method: 'GET',
+    headers: {
+      Authorization: 'Bearer ' + access_token,
+    },
+  };
+  const response = await fetch(url, authOptions);
+  if (response.ok) {
+    const json: RelatedArtistsResponse = await response.json();
+    const artists: artist[] = [];
+    json.artists.slice(0, maxArtists).forEach((entry) => {
+      artists.push({
+        id: entry.id,
+        name: entry.name,
+        image: Object.hasOwn(entry, 'images') ? entry.images.slice(-1)[0].url : '',
+        genres: entry.genres,
+      });
+    });
+    return artists;
+  } else {
+    return null;
+  }
+}
+
 export async function loadArtist(id: string) {
   const topTracks = await getArtistTopTracks(id);
   const artist = await getArtist(id);
+  const relatedArtists = await getArtistRelatedArtists(id);
   const albums = await getArtistItems(id, 'album');
   const singles = await getArtistItems(id, 'single');
   const compilations = await getArtistItems(id, 'compilation');
@@ -110,5 +141,5 @@ export async function loadArtist(id: string) {
     },
   };
 
-  return { topTracks, artist, discography, appearsOn };
+  return { topTracks, artist, relatedArtists, discography, appearsOn };
 }

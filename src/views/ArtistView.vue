@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import NotYetImplemented from '@/components/NotYetImplemented.vue';
 import { loadArtist } from '@/utils/spotifyLoader';
 import { ref } from 'vue';
 
@@ -7,7 +6,7 @@ const props = defineProps({
   id: { type: String, required: true },
 });
 
-const { topTracks, artist, discography, appearsOn } = await loadArtist(props.id);
+const { topTracks, artist, discography, appearsOn, relatedArtists } = await loadArtist(props.id);
 const discographyTab = ref<'albums' | 'singles' | 'compilations'>('albums');
 const selectedDiscography = ref(discography.albums);
 
@@ -35,7 +34,11 @@ function switchDiscographyTab(newDiscographyTab: 'albums' | 'singles' | 'compila
   <ul>
     <li v-for="item in selectedDiscography.content" :key="item.id + item.type">{{ item.name }}</li>
   </ul>
-  <h2>AppearsOn</h2>
+  <h2>Sus fans también escuchan</h2>
+  <ul>
+    <li v-for="item in relatedArtists" :key="item.id">{{ item.name }}</li>
+  </ul>
+  <h2>Aparece en</h2>
   <ul>
     <li v-for="item in appearsOn" :key="item.id + item.type">{{ item.name }}</li>
   </ul>

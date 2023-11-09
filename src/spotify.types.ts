@@ -30,7 +30,7 @@ export interface TrackResponse {
 }
 
 export interface AlbumResponse {
-  album_type: string;
+  album_type: 'album' | 'compilation' | 'single';
   total_tracks: number;
   available_markets: string[];
   external_urls: ExternalUrls;

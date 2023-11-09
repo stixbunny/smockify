@@ -4,8 +4,17 @@ import type {
   ArtistResponse,
   AlbumsResponse,
   RelatedArtistsResponse,
+  AlbumResponse,
 } from '@/spotify.types';
-import type { artistTopTrack, artist, artistItem } from '@/types';
+import type {
+  artistTopTrack,
+  artist,
+  artistItem,
+  album,
+  albumArtist,
+  albumSong,
+  albumSongArtist,
+} from '@/types';
 
 const { access_token } = useMainStore();
 
@@ -91,7 +100,7 @@ async function getArtistItems(
   }
 }
 
-async function getArtistRelatedArtists(id: string, maxArtists=10): Promise<artist[] | null> {
+async function getArtistRelatedArtists(id: string, maxArtists = 10): Promise<artist[] | null> {
   const url = `https://api.spotify.com/v1/artists/${id}/related-artists`;
   const authOptions = {
     method: 'GET',
@@ -112,6 +121,68 @@ async function getArtistRelatedArtists(id: string, maxArtists=10): Promise<artis
       });
     });
     return artists;
+  } else {
+    return null;
+  }
+}
+
+async function getAlbum(id: string): Promise<album | null> {
+  const url = `https://api.spotify.com/v1/albums/${id}?market=ES`;
+  const authOptions = {
+    method: 'GET',
+    headers: {
+      Authorization: 'Bearer ' + access_token,
+    },
+  };
+  const response = await fetch(url, authOptions);
+  if (response.ok) {
+    const json: AlbumResponse = await response.json();
+    const releaseDate = json.release_date;
+    const releaseYear = new Date(releaseDate).getFullYear();
+    const copyrights: string[] = [];
+    json.copyrights.forEach((entry) => {
+      copyrights.push(entry.text);
+    });
+    const artists: albumArtist[] = [];
+    json.artists.forEach((entry) => {
+      artists.push({
+        name: entry.name,
+        id: json.id,
+      });
+    });
+    const songs: albumSong[] = [];
+    json.tracks.items.forEach((entry) => {
+      const artists: albumSongArtist[] = [];
+      entry.track.artists.forEach((artist) => {
+        artists.push({
+          name: artist.name,
+          id: artist.id,
+        });
+      });
+      songs.push({
+        name: entry.track.name,
+        id: entry.track.id,
+        durationMs: entry.track.duration_ms,
+        explicit: entry.track.explicit,
+        artists: artists,
+        number: entry.track.track_number,
+        disc: entry.track.disc_number,
+      });
+    });
+    const album: album = {
+      albumType: json.album_type,
+      totalTracks: json.total_tracks,
+      totalDuration: 0,
+      id: json.id,
+      name: json.name,
+      imgUrl: json.images ? json.images[0].url : '',
+      releaseDate: releaseDate,
+      releaseYear: releaseYear,
+      copyrights: copyrights,
+      artists: artists,
+      songs: songs,
+    };
+    return album;
   } else {
     return null;
   }
@@ -142,4 +213,9 @@ export async function loadArtist(id: string) {
   };
 
   return { topTracks, artist, relatedArtists, discography, appearsOn };
+}
+
+export async function loadAlbum(id: string) {
+  const album = await getAlbum(id);
+  return { album };
 }

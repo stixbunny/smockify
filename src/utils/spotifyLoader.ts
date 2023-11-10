@@ -14,6 +14,7 @@ import type {
   albumArtist,
   albumSong,
   albumSongArtist,
+  albumDisc,
 } from '@/types';
 
 const { access_token } = useMainStore();
@@ -150,29 +151,49 @@ async function getAlbum(id: string): Promise<album | null> {
         id: json.id,
       });
     });
-    const songs: albumSong[] = [];
+    const discs: albumDisc[] = [];
+    const tempSongs: albumSong[] = [];
+    const numberOfDiscs = new Set<number>();
+    let totalDuration = 0;
+    let numberOfSongs = 0;
     json.tracks.items.forEach((entry) => {
+      numberOfSongs += 1;
+      if (!numberOfDiscs.has(entry.disc_number) && tempSongs.length > 0) {
+        discs.push({
+          number: numberOfDiscs.size,
+          songs: tempSongs,
+        });
+        tempSongs.length = 0;
+      }
       const artists: albumSongArtist[] = [];
-      entry.track.artists.forEach((artist) => {
+      entry.artists.forEach((artist) => {
         artists.push({
           name: artist.name,
           id: artist.id,
         });
       });
-      songs.push({
-        name: entry.track.name,
-        id: entry.track.id,
-        durationMs: entry.track.duration_ms,
-        explicit: entry.track.explicit,
+      const tempSong = {
+        name: entry.name,
+        id: entry.id,
+        durationMs: entry.duration_ms,
+        explicit: entry.explicit,
         artists: artists,
-        number: entry.track.track_number,
-        disc: entry.track.disc_number,
-      });
+        number: entry.track_number,
+      };
+      tempSongs.push(tempSong);
+      numberOfDiscs.add(entry.disc_number);
+      totalDuration += entry.duration_ms;
     });
+    if (tempSongs.length > 0) {
+      discs.push({
+        number: numberOfDiscs.size,
+        songs: tempSongs,
+      });
+    }
     const album: album = {
       albumType: json.album_type,
       totalTracks: json.total_tracks,
-      totalDuration: 0,
+      totalDuration: totalDuration,
       id: json.id,
       name: json.name,
       imgUrl: json.images ? json.images[0].url : '',
@@ -180,7 +201,9 @@ async function getAlbum(id: string): Promise<album | null> {
       releaseYear: releaseYear,
       copyrights: copyrights,
       artists: artists,
-      songs: songs,
+      numberOfSongs: numberOfSongs,
+      discs: discs,
+      numberOfDiscs: numberOfDiscs.size,
     };
     return album;
   } else {

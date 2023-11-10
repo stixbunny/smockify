@@ -1,5 +1,3 @@
-import { type } from 'os';
-
 export interface SpotifyConnectionResponse {
   access_token: string;
   token_type: string;
@@ -49,7 +47,7 @@ export interface AlbumResponse {
   label: string;
   popularity: number;
   artists: Artist[];
-  tracks: Tracks;
+  tracks: AlbumTracks;
 }
 
 export interface AlbumsResponse {
@@ -172,6 +170,33 @@ export interface AlbumArtist {
   name: string;
   type: string;
   uri: string;
+}
+
+export interface AlbumTracks {
+  href:     string;
+  items:    AlbumTracksItem[];
+  limit:    number;
+  next:     null;
+  offset:   number;
+  previous: null;
+  total:    number;
+}
+
+export interface AlbumTracksItem {
+  artists:       Artist[];
+  disc_number:   number;
+  duration_ms:   number;
+  explicit:      boolean;
+  external_urls: ExternalUrls;
+  href:          string;
+  id:            string;
+  is_local:      boolean;
+  is_playable:   boolean;
+  name:          string;
+  preview_url:   string;
+  track_number:  number;
+  type:          string;
+  uri:           string;
 }
 
 export interface Tracks {

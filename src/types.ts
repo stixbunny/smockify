@@ -80,7 +80,9 @@ export interface album {
   releaseYear: number;
   copyrights: string[];
   artists: albumArtist[];
-  songs: albumSong[];
+  numberOfSongs: number;
+  numberOfDiscs: number;
+  discs: albumDisc[];
 }
 
 export interface albumSong {
@@ -88,7 +90,6 @@ export interface albumSong {
   id: string;
   durationMs: number;
   number: number;
-  disc: number;
   explicit: boolean;
   artists: albumSongArtist[];
 }
@@ -101,4 +102,9 @@ export interface albumArtist {
 export interface albumSongArtist {
   name: string;
   id: string;
+}
+
+export interface albumDisc {
+  number: number;
+  songs: albumSong[];
 }

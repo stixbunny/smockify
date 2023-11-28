@@ -1,3 +1,5 @@
+import type { AlbumArtist } from "./spotify.types";
+
 export type VolumePower = 'muted' | 'low' | 'medium' | 'high';
 
 export interface homeSection {
@@ -107,4 +109,29 @@ export interface albumSongArtist {
 export interface albumDisc {
   number: number;
   songs: albumSong[];
+}
+
+export interface playlist {
+  id: string;
+  name: string;
+  description: string;
+  likes: number;
+  image: string;
+  ownerId: string;
+  ownerName: string;
+  songs: playlistItem[];
+  totalDuration: number;
+  numberOfSongs: number;
+}
+
+export interface playlistItem {
+  id: string;
+  name: string;
+  artists: albumArtist[],
+  albumId: string;
+  albumName: string;
+  image: string;
+  addedOn: string;
+  duration: number;
+  explicit: boolean;
 }

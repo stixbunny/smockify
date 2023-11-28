@@ -5,6 +5,7 @@ import type {
   AlbumsResponse,
   RelatedArtistsResponse,
   AlbumResponse,
+  PlaylistResponse,
 } from '@/spotify.types';
 import type {
   artistTopTrack,
@@ -15,6 +16,8 @@ import type {
   albumSong,
   albumSongArtist,
   albumDisc,
+  playlist,
+  playlistItem,
 } from '@/types';
 
 const { access_token } = useMainStore();
@@ -211,6 +214,62 @@ async function getAlbum(id: string): Promise<album | null> {
   }
 }
 
+async function getPlaylist(id: string): Promise<playlist | null> {
+  const url = `https://api.spotify.com/v1/playlists/${id}`;
+  const authOptions = {
+    method: 'GET',
+    headers: {
+      Authorization: 'Bearer ' + access_token,
+    },
+  };
+  const response = await fetch(url, authOptions);
+  if (response.ok) {
+    const json: PlaylistResponse = await response.json();
+    const songs: playlistItem[] = [];
+    let totalDuration = 0;
+    let numberOfSongs = 0;
+    json.tracks.items.forEach((item) => {
+      const artists: albumArtist[] = [];
+      item.track.artists.forEach((artist) => {
+        numberOfSongs += 1;
+        totalDuration += item.track.duration_ms;
+        artists.push({
+          name: artist.name,
+          id: artist.id,
+        });
+      });
+      songs.push({
+        id: item.track.id,
+        name: item.track.name,
+        artists: artists,
+        albumId: item.track.album.id,
+        albumName: item.track.album.name,
+        image: Object.hasOwn(item.track.album, 'images')
+          ? item.track.album.images.slice(-1)[0].url
+          : '',
+        addedOn: item.added_at,
+        duration: item.track.duration_ms,
+        explicit: item.track.explicit,
+      });
+    });
+    const playlist: playlist = {
+      id: json.id,
+      name: json.name,
+      description: json.description,
+      image: Object.hasOwn(json, 'images') ? json.images.slice(-1)[0].url : '',
+      likes: json.followers.total,
+      ownerId: json.owner.id,
+      ownerName: json.owner.display_name ? json.owner.display_name : '',
+      songs: songs,
+      numberOfSongs: numberOfSongs,
+      totalDuration: totalDuration,
+    };
+    return playlist;
+  } else {
+    return null;
+  }
+}
+
 export async function loadArtist(id: string) {
   const topTracks = await getArtistTopTracks(id);
   const artist = await getArtist(id);
@@ -241,4 +300,9 @@ export async function loadArtist(id: string) {
 export async function loadAlbum(id: string) {
   const album = await getAlbum(id);
   return { album };
+}
+
+export async function loadPlaylist(id: string) {
+  const playlist = await getPlaylist(id);
+  return { playlist };
 }

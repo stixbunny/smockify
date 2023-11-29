@@ -256,7 +256,7 @@ async function getPlaylist(id: string): Promise<playlist | null> {
       id: json.id,
       name: json.name,
       description: json.description,
-      image: Object.hasOwn(json, 'images') ? json.images.slice(-1)[0].url : '',
+      image: Object.hasOwn(json, 'images') ? json.images.slice(0)[0].url : '',
       likes: json.followers.total,
       ownerId: json.owner.id,
       ownerName: json.owner.display_name ? json.owner.display_name : '',

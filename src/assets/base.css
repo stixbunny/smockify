@@ -42,6 +42,8 @@
   --divider-minimized-width: 83.5px;
 
   --base-font: 16px;
+  /*singular title*/
+  --fs-huge: 6rem; /*bold*/
   /*welcome*/
   --fs-larger: 2rem; /*almost bold*/
   /*section-title in content*/
@@ -83,9 +85,4 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-span.dot {
-  display: inline !important;
-  font-family: sans-serif !important;
 }

@@ -4,6 +4,7 @@ import msToTime from '@/utils/msToTime';
 import localeDateString from '@/utils/localeDateString';
 import TextDot from '@/components/text/TextDot.vue';
 import { useContentStore } from '@/stores/content';
+import msToVerboseTime from '@/utils/msToVerboseTime';
 
 const content = useContentStore();
 
@@ -18,21 +19,32 @@ const songs = playlist?.songs;
 <template>
   <section class="contenttitle">
     <div class="contenttitle_image">
-      <img :src="playlist?.image" alt="">
+      <img crossorigin="anonymous" :src="playlist?.image" alt="" @load="(el) => content.setColorFromElement(el.target)" />
     </div>
     <div class="contenttitle_info">
       <p class="contenttitle_info_type">Lista</p>
       <h1 class="contenttitle_info_name">{{ playlist?.name }}</h1>
+      <p class="contenttitle_info_description">{{ playlist?.description }}</p>
       <p class="contenttitle_info_sub">
-        <span class="contenttitle_info_sub_owner">{{ playlist?.ownerName }}</span><TextDot />
+        <span class="contenttitle_info_sub_owner">{{ playlist?.ownerName }}</span
+        ><TextDot />
         <span v-if="playlist?.likes ? playlist.likes > 0 : false">
-          <span class="contenttitle_info_sub_likes">{{ playlist?.likes }} me gusta</span><TextDot />
+          <span class="contenttitle_info_sub_likes"
+            >{{ playlist?.likes.toLocaleString() }} me gusta</span
+          ><TextDot />
         </span>
-        <span v-if="playlist?.numberOfSongs ? playlist.numberOfSongs > 1 : false" class="contenttitle_info_sub_songs">
+        <span
+          v-if="playlist?.numberOfSongs ? playlist.numberOfSongs > 1 : false"
+          class="contenttitle_info_sub_songs"
+        >
           {{ playlist?.numberOfSongs }} canciones,
         </span>
-        <span v-else class="contenttitle_info_sub_songs">{{ playlist?.numberOfSongs }} canción, </span>
-        <span class="contenttitle_info_sub_duration">{{ msToTime(playlist?.totalDuration ? playlist.totalDuration : 0) }}</span>
+        <span v-else class="contenttitle_info_sub_songs"
+          >{{ playlist?.numberOfSongs }} canción,
+        </span>
+        <span class="contenttitle_info_sub_duration">{{
+          msToVerboseTime(playlist?.totalDuration ? playlist.totalDuration : 0)
+        }}</span>
       </p>
     </div>
   </section>
@@ -66,10 +78,12 @@ const songs = playlist?.songs;
   flex-direction: row;
   gap: 1.5rem;
   margin-top: 5rem;
+  --content-width: v-bind('content.widthAsPx');
 }
 .contenttitle_image {
   width: 192px;
   height: 192px;
+  min-width: 192px;
 }
 .contenttitle_image > img {
   width: 100%;
@@ -79,12 +93,17 @@ const songs = playlist?.songs;
   display: flex;
   flex-direction: column;
   justify-content: end;
+  overflow-x: hidden;
 }
 .contenttitle_info_name {
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
   font-weight: bold;
-  font-size: 6rem;
+  font-size: clamp(2rem, -3.7928rem + 0.120527 * var(--content-width), 6rem);
   line-height: 1.2;
+}
+.contenttitle_info_description {
+  font-size: var(--fs-small);
+  color: var(--text-subdued);
 }
 .contenttitle_info_sub {
   font-size: var(--fs-small);

@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 import { loadPlaylist } from '@/utils/spotifyLoader';
+import { ref, provide } from 'vue';
 import msToTime from '@/utils/msToTime';
 import localeDateString from '@/utils/localeDateString';
 import TextDot from '@/components/text/TextDot.vue';
 import { useContentStore } from '@/stores/content';
 import msToVerboseTime from '@/utils/msToVerboseTime';
+import MaxFontSpan from '@/components/UI/MaxFontSpan.vue';
 
 const content = useContentStore();
 
@@ -14,16 +16,26 @@ const props = defineProps({
 
 const { playlist } = await loadPlaylist(props.id);
 const songs = playlist?.songs;
+
+const container = ref<HTMLDivElement | null>(null);
+provide('container', container);
 </script>
 
 <template>
   <section class="contenttitle">
     <div class="contenttitle_image">
-      <img crossorigin="anonymous" :src="playlist?.image" alt="" @load="(el) => content.setColorFromElement(el.target)" />
+      <img
+        crossorigin="anonymous"
+        :src="playlist?.image"
+        alt=""
+        @load="(el) => content.setColorFromElement(el.target)"
+      />
     </div>
     <div class="contenttitle_info">
       <p class="contenttitle_info_type">Lista</p>
-      <h1 class="contenttitle_info_name">{{ playlist?.name }}</h1>
+      <p class="contenttitle_info_name" ref="container">
+        <MaxFontSpan :text="playlist ? playlist.name : ''" />
+      </p>
       <p class="contenttitle_info_description">{{ playlist?.description }}</p>
       <p class="contenttitle_info_sub">
         <span class="contenttitle_info_sub_owner">{{ playlist?.ownerName }}</span
@@ -92,14 +104,9 @@ const songs = playlist?.songs;
 .contenttitle_info {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   justify-content: end;
   overflow-x: hidden;
-}
-.contenttitle_info_name {
-  /* margin-bottom: 1rem; */
-  font-weight: bold;
-  font-size: clamp(2rem, -3.7928rem + 0.120527 * var(--content-width), 6rem);
-  line-height: 1.2;
 }
 .contenttitle_info_description {
   font-size: var(--fs-small);

@@ -2,6 +2,7 @@
 import { loadAlbum } from '@/utils/spotifyLoader';
 import msToTime from '@/utils/msToTime';
 import localeDateString from '@/utils/localeDateString';
+import AlbumTable from '@/components/UI/AlbumTable.vue';
 
 const props = defineProps({
   id: { type: String, required: true },
@@ -25,27 +26,7 @@ const releaseString = album?.releaseDate ? localeDateString(album.releaseDate) :
     <span v-else>{{ album?.totalTracks }} canción, </span>
     <span>{{ msToTime(album?.totalDuration ? album.totalDuration : 0) }}</span>
   </p>
-  <table>
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Título</th>
-        <th>clock-icon</th>
-      </tr>
-    </thead>
-  </table>
-  <div v-for="disc in album?.discs" :key="'disc - ' + disc.number">
-    <div v-if="album?.numberOfDiscs ? album.numberOfDiscs > 1 : false">{{ `Disco ${disc.number}`}}</div>
-    <table>
-      <tbody>
-        <tr v-for="song in disc.songs" :key="'song - ' + song.id">
-          <th>{{ song.number }}</th>
-          <th>{{ song.name }}<span v-if="song.explicit"> (E)</span></th>
-          <th>{{ msToTime(song.durationMs) }}</th>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <AlbumTable :discs="album? album.discs : []" />
   <section>
     <p>{{ releaseString }}</p>
     <p v-for="copyright in album?.copyrights" :key="copyright">{{ copyright }}</p>

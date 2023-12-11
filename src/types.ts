@@ -135,3 +135,8 @@ export interface playlistItem {
   duration: number;
   explicit: boolean;
 }
+
+export interface simpleArtist {
+  name: string;
+  id: string;
+}

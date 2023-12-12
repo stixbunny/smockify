@@ -157,7 +157,6 @@ async function getAlbum(id: string): Promise<album | null> {
     const discs: albumDisc[] = [];
     let totalDuration = 0;
     let numberOfSongs = 0;
-    console.log(json);
     json.tracks.items.forEach((entry) => {
       numberOfSongs += 1;
       const artists: albumSongArtist[] = [];
@@ -175,8 +174,6 @@ async function getAlbum(id: string): Promise<album | null> {
         artists: artists,
         number: entry.track_number,
       };
-      console.log(`found tempSong ${tempSong.name} by`)
-      console.log(tempSong.artists)
       if(discs.filter((x) => x.number === entry.disc_number).length === 0) {
         discs.push({
           number: entry.disc_number,

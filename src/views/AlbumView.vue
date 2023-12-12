@@ -3,6 +3,7 @@ import { loadAlbum } from '@/utils/spotifyLoader';
 import msToTime from '@/utils/msToTime';
 import localeDateString from '@/utils/localeDateString';
 import AlbumTable from '@/components/UI/AlbumTable.vue';
+import ContentPresentation from '@/components/UI/ContentPresentation.vue';
 
 const props = defineProps({
   id: { type: String, required: true },
@@ -13,19 +14,16 @@ const releaseString = album?.releaseDate ? localeDateString(album.releaseDate) :
 </script>
 
 <template>
-  <p>{{ album?.albumType }}</p>
-  <h1>{{ album?.name }}</h1>
-  <p>
-    <span v-for="artist in album?.artists" :key="artist.id + '-author'">
-      {{ artist.name + ' - ' }}
-    </span>
-    <span>{{ album?.releaseYear + ' - ' }}</span>
-    <span v-if="album?.totalTracks ? album.totalTracks > 1 : false">
-      {{ album?.totalTracks }} canciones,
-    </span>
-    <span v-else>{{ album?.totalTracks }} canción, </span>
-    <span>{{ msToTime(album?.totalDuration ? album.totalDuration : 0) }}</span>
-  </p>
+  <ContentPresentation
+    v-if="album"
+    :type="album.albumType"
+    :image="album.imgUrl"
+    :name="album.name"
+    :number-of-songs="album.numberOfSongs"
+    :total-duration="album.totalDuration"
+    :artists="album.artists"
+    :year="album.releaseYear"
+  ></ContentPresentation>
   <AlbumTable :discs="album ? album.discs : []" />
   <section class="credits">
     <p class="credits_release">{{ releaseString }}</p>

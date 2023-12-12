@@ -1,26 +1,31 @@
 <script setup lang="ts">
-import { ref, provide } from 'vue';
+import { ref, provide, h } from 'vue';
 import MaxFontSpan from '@/components/UI/MaxFontSpan.vue';
 import TextDot from '@/components/text/TextDot.vue';
 import { useContentStore } from '@/stores/content';
 import msToVerboseTime from '@/utils/msToVerboseTime';
+import LinkedArtists from './LinkedArtists.vue';
+import type { simpleArtist } from '@/types';
 
 const content = useContentStore();
 const container = ref<HTMLDivElement | null>(null);
 provide('container', container);
 
 interface Props {
-  type: 'album' | 'song' | 'playlist';
+  type: 'album' | 'compilation' | 'single' | 'song' | 'playlist';
   image?: string;
   name: string;
   description?: string;
-  author: string;
+  author?: string;
   likes?: number;
   numberOfSongs?: number;
   year?: number;
   totalDuration: number;
+  artists?: simpleArtist[];
 }
 const props = withDefaults(defineProps<Props>(), {});
+
+const isAlbum = props.type === 'album' || props.type === 'single' || props.type === 'compilation';
 </script>
 
 <template>
@@ -34,7 +39,14 @@ const props = withDefaults(defineProps<Props>(), {});
       />
     </div>
     <div class="contentpresentation_info">
-      <p class="contentpresentation_info_type">Lista</p>
+      <p v-if="props.type === 'playlist'" class="contentpresentation_info_type">Lista</p>
+      <p
+        v-else-if="props.type === 'album' || props.type === 'compilation'"
+        class="contentpresentation_info_type"
+      >
+        Álbum
+      </p>
+      <p v-else-if="props.type === 'single'" class="contentpresentation_info_type">Sencillo</p>
       <p class="contentpresentation_info_name" ref="container">
         <MaxFontSpan :text="props.name" />
       </p>
@@ -42,13 +54,21 @@ const props = withDefaults(defineProps<Props>(), {});
         {{ props.description }}
       </p>
       <p class="contentpresentation_info_sub">
-        <span class="contentpresentation_info_sub_owner">{{ props.author }}</span
-        ><TextDot />
-        <span v-if="props.likes">
-          <span class="contenttitle_info_sub_likes"
+        <template v-if="props.type === 'playlist'">
+          <span class="contentpresentation_info_sub_owner">{{ props.author }}</span
+          ><TextDot />
+          <span v-if="props.likes" class="contenttitle_info_sub_likes"
             >{{ props.likes.toLocaleString() }} me gusta</span
           ><TextDot />
-        </span>
+        </template>
+        <template v-else-if="isAlbum && props.artists">
+          <span class="contentpresentation_info_sub_owner"
+            ><LinkedArtists :artists="props.artists" separator="dot"
+          /></span>
+          <TextDot />
+          <span class="contenttitle_info_sub_year">{{ props.year }}</span
+          ><TextDot />
+        </template>
         <span
           v-if="props.numberOfSongs ? props.numberOfSongs > 1 : false"
           class="contentpresentation_info_sub_songs"
@@ -58,7 +78,10 @@ const props = withDefaults(defineProps<Props>(), {});
         <span v-else class="contentpresentation_info_sub_songs"
           >{{ props.numberOfSongs }} canción,
         </span>
-        <span class="contentpresentation_info_sub_duration">{{
+        <span v-if="props.type === 'playlist'" class="contentpresentation_info_sub_duration">{{
+          msToVerboseTime(props.totalDuration ? props.totalDuration : 0)
+        }}</span>
+        <span v-if="isAlbum" class="contentpresentation_info_sub_duration">{{
           msToVerboseTime(props.totalDuration ? props.totalDuration : 0)
         }}</span>
       </p>

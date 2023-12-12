@@ -16,13 +16,13 @@
 <style scoped>
 table {
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 1rem 1rem;
+  border-collapse: collapse;
 }
 thead, tbody {
   vertical-align: middle;
 }
 thead {
   color: var(--text-subdued);
+  border-bottom: 1px solid var(--text-subdued);
 }
 </style>

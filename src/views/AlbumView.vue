@@ -26,9 +26,23 @@ const releaseString = album?.releaseDate ? localeDateString(album.releaseDate) :
     <span v-else>{{ album?.totalTracks }} canción, </span>
     <span>{{ msToTime(album?.totalDuration ? album.totalDuration : 0) }}</span>
   </p>
-  <AlbumTable :discs="album? album.discs : []" />
-  <section>
-    <p>{{ releaseString }}</p>
-    <p v-for="copyright in album?.copyrights" :key="copyright">{{ copyright }}</p>
+  <AlbumTable :discs="album ? album.discs : []" />
+  <section class="credits">
+    <p class="credits_release">{{ releaseString }}</p>
+    <p v-for="copyright in album?.copyrights" :key="copyright" class="credits_copyright">
+      {{ copyright }}
+    </p>
   </section>
 </template>
+
+<style scoped>
+.credits {
+  color: var(--text-subdued);
+}
+.credits_release {
+  font-size: var(--fs-small);
+}
+.credits_copyright {
+  font-size: var(--fs-smaller);
+}
+</style>

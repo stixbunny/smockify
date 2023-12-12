@@ -14,4 +14,14 @@ const props = defineProps<{
     <span v-if="index < artists.length - 1">, </span>
   </span>
 </template>
-<style scoped></style>
+<style scoped>
+a {
+  color: inherit;
+}
+a:hover {
+  text-decoration: underline;
+}
+span {
+  font-weight: bold;
+}
+</style>

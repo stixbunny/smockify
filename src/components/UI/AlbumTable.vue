@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import IconClock from '../icons/IconClock.vue';
+import IconDisc from '../icons/IconDisc.vue';
 import ContentTable from './ContentTable.vue';
 import TableSong from './TableSong.vue';
-import msToTime from '@/utils/msToTime';
+import msToTime from '@/utils/msToUnpaddedTime';
 import type { albumDisc } from '@/types';
 
 const props = defineProps<{
@@ -22,7 +23,7 @@ console.log(props.discs);
     <template #body>
       <template v-for="(disc, i) in props.discs" :key="i + '-album-table-disc'">
         <tr v-if="props.discs.length > 1" class="album-table_disc">
-          <td>{{ disc.number }}</td>
+          <td><IconDisc /></td>
           <td>{{ 'Disco ' + disc.number }}</td>
         </tr>
         <tr
@@ -30,9 +31,16 @@ console.log(props.discs);
           :key="j + '-' + i + '-album-table-song'"
           class="album-table_song"
         >
-          <td>{{ song.number }}</td>
-          <td><TableSong :name="song.name" :explicit="song.explicit" :artists="song.artists" /></td>
-          <td>{{ msToTime(song.durationMs) }}</td>
+          <td class="album-table_song_number">{{ song.number }}</td>
+          <td class="album-table_song_name">
+            <TableSong
+              :name="song.name"
+              :explicit="song.explicit"
+              :artists="song.artists"
+              :id="song.id"
+            />
+          </td>
+          <td class="album-table_song_time">{{ msToTime(song.durationMs) }}</td>
         </tr>
       </template>
     </template>
@@ -40,21 +48,45 @@ console.log(props.discs);
 </template>
 
 <style scoped>
-td:first-child {
-  text-align: right;
+td:first-child,
+td:nth-child(3) {
+  text-align: center;
 }
 td:nth-child(2) {
   text-align: left;
 }
-td:nth-child(3) {
-  text-align: center;
-}
 .album-table_disc {
   color: var(--text-subdued);
 }
-.album-table_song > td:first-child,
-.album-table_song > td:nth-child(3) {
+.album-table_song_number,
+.album-table_song_time {
   color: var(--text-subdued);
+}
+.album-table_song_number {
   font-size: var(--fs-medium);
+}
+.album-table_song_name {
+  width: 100%;
+}
+.album-table_song {
+  color: var(--text-subdued);
+}
+.album-table_song:hover {
+  background-color: var(--background-tinted-highlight);
+  border-radius: 5px;
+  color: var(--text-base);
+  .album-table_song_number {
+    color: inherit;
+    border-radius: 5px 0 0 5px;
+  }
+  .album-table_song_time {
+    border-radius: 0 5px 5px 0;
+  }
+  .album-table_song_name {
+    color: inherit;
+  }
+}
+td {
+  padding: 0.5rem 0.4rem;
 }
 </style>

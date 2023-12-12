@@ -83,7 +83,6 @@ export interface album {
   copyrights: string[];
   artists: albumArtist[];
   numberOfSongs: number;
-  numberOfDiscs: number;
   discs: albumDisc[];
 }
 

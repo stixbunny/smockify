@@ -155,19 +155,11 @@ async function getAlbum(id: string): Promise<album | null> {
       });
     });
     const discs: albumDisc[] = [];
-    const tempSongs: albumSong[] = [];
-    const numberOfDiscs = new Set<number>();
     let totalDuration = 0;
     let numberOfSongs = 0;
+    console.log(json);
     json.tracks.items.forEach((entry) => {
       numberOfSongs += 1;
-      if (!numberOfDiscs.has(entry.disc_number) && tempSongs.length > 0) {
-        discs.push({
-          number: numberOfDiscs.size,
-          songs: tempSongs,
-        });
-        tempSongs.length = 0;
-      }
       const artists: albumSongArtist[] = [];
       entry.artists.forEach((artist) => {
         artists.push({
@@ -183,16 +175,17 @@ async function getAlbum(id: string): Promise<album | null> {
         artists: artists,
         number: entry.track_number,
       };
-      tempSongs.push(tempSong);
-      numberOfDiscs.add(entry.disc_number);
+      console.log(`found tempSong ${tempSong.name} by`)
+      console.log(tempSong.artists)
+      if(discs.filter((x) => x.number === entry.disc_number).length === 0) {
+        discs.push({
+          number: entry.disc_number,
+          songs: [],
+        });
+      }
+      discs.find((x) => x.number === entry.disc_number)?.songs.push(tempSong);
       totalDuration += entry.duration_ms;
     });
-    if (tempSongs.length > 0) {
-      discs.push({
-        number: numberOfDiscs.size,
-        songs: tempSongs,
-      });
-    }
     const album: album = {
       albumType: json.album_type,
       totalTracks: json.total_tracks,
@@ -206,7 +199,6 @@ async function getAlbum(id: string): Promise<album | null> {
       artists: artists,
       numberOfSongs: numberOfSongs,
       discs: discs,
-      numberOfDiscs: numberOfDiscs.size,
     };
     return album;
   } else {

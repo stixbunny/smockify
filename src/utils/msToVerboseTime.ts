@@ -6,5 +6,6 @@ export default function msToTime(timeInMs: number): string {
     hours = Math.floor(minutes / 60);
     minutes %= 60;
   }
-  return `${hours} h ${minutes} min aproximadamente`;
+
+  return hours ? `${hours} h ${minutes} min aproximadamente` : `${minutes} min aproximadamente`;
 }

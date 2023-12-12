@@ -9,8 +9,6 @@ import type { albumDisc } from '@/types';
 const props = defineProps<{
   discs: albumDisc[];
 }>();
-
-console.log(props.discs);
 </script>
 
 <template>

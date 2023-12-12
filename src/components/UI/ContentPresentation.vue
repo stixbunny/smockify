@@ -10,7 +10,7 @@ const container = ref<HTMLDivElement | null>(null);
 provide('container', container);
 
 interface Props {
-  for: 'album' | 'song' | 'playlist';
+  type: 'album' | 'song' | 'playlist';
   image?: string;
   name: string;
   description?: string;
@@ -67,14 +67,14 @@ const props = withDefaults(defineProps<Props>(), {});
 </template>
 
 <style scoped>
-.contenttitle {
+.contentpresentation {
   display: flex;
   flex-direction: row;
   gap: 1.5rem;
   margin-top: 5rem;
   --content-width: v-bind('content.widthAsPx');
 }
-.contenttitle_image {
+.contentpresentation_image {
   width: 192px;
   height: 192px;
   min-width: 192px;

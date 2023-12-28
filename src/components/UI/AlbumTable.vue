@@ -14,9 +14,9 @@ const props = defineProps<{
 <template>
   <ContentTable>
     <template #header>
-      <td>#</td>
-      <td>Título</td>
-      <td><IconClock /></td>
+      <th>#</th>
+      <th>Título</th>
+      <th><IconClock /></th>
     </template>
     <template #body>
       <template v-for="(disc, i) in props.discs" :key="i + '-album-table-disc'">
@@ -46,6 +46,14 @@ const props = defineProps<{
 </template>
 
 <style scoped>
+th:first-child,
+th:nth-child(3) {
+  width: 50px;
+}
+
+th:nth-child(2) {
+  text-align: left;
+}
 td:first-child,
 td:nth-child(3) {
   text-align: center;
@@ -64,7 +72,7 @@ td:nth-child(2) {
   font-size: var(--fs-medium);
 }
 .album-table_song_name {
-  width: 100%;
+  max-width: 100%;
 }
 .album-table_song {
   color: var(--text-subdued);
@@ -83,8 +91,5 @@ td:nth-child(2) {
   .album-table_song_name {
     color: inherit;
   }
-}
-td {
-  padding: 0.5rem 0.4rem;
 }
 </style>

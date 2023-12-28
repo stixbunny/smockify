@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { loadAlbum } from '@/utils/spotifyLoader';
-import msToTime from '@/utils/msToTime';
 import localeDateString from '@/utils/localeDateString';
 import AlbumTable from '@/components/UI/AlbumTable.vue';
 import ContentPresentation from '@/components/UI/ContentPresentation.vue';
@@ -34,13 +33,18 @@ const releaseString = album?.releaseDate ? localeDateString(album.releaseDate) :
 </template>
 
 <style scoped>
+* + * {
+  margin-top: 2rem;
+}
 .credits {
   color: var(--text-subdued);
 }
 .credits_release {
   font-size: var(--fs-small);
+  margin-top: 0;
 }
 .credits_copyright {
   font-size: var(--fs-smaller);
+  margin-top: 0;
 }
 </style>

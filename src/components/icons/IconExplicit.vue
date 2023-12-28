@@ -4,9 +4,12 @@
 
 <style scoped>
 .icon-explicit {
-
+  display: inline-flex;
+  gap: 0 4px;
+  justify-content: center;
+  vertical-align: text-bottom;
 }
-.icon-explicit-e {
+.icon-explicit_e {
   background-color: hsla(0, 0%, 100%, .6);
   color: var(--background-base);
   border-radius: 2px;

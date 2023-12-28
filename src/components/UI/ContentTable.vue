@@ -38,6 +38,6 @@ tbody > tr > td {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: 0.5rem 0.4rem;
+  padding-block: 0.4rem;
 }
 </style>

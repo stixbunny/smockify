@@ -50,7 +50,7 @@ th:nth-child(5) {
   width: 50px;
 }
 th:nth-child(2) {
-  width: 40%;
+  width: 50%;
 }
 
 th:nth-child(2),

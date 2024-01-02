@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { loadArtist } from '@/utils/spotifyLoader';
 import { ref } from 'vue';
+import ArtistPresentation from '@/components/UI/ArtistPresentation.vue';
 
 const props = defineProps({
   id: { type: String, required: true },
@@ -17,7 +18,7 @@ function switchDiscographyTab(newDiscographyTab: 'albums' | 'singles' | 'compila
 </script>
 
 <template>
-  <h1>{{ artist?.name }}</h1>
+  <ArtistPresentation v-if="artist" :name="artist?.name" :followers="artist?.followers" :image="artist.image" />
   <h2>Populares</h2>
   <ul>
     <li v-for="item in topTracks" :key="item.songId + 'top'">{{ item.songName }}</li>

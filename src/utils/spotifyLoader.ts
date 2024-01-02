@@ -63,8 +63,9 @@ async function getArtist(id: string): Promise<artist | null> {
     const artist: artist = {
       id: json.id,
       name: json.name,
-      image: Object.hasOwn(json, 'images') ? json.images.slice(-1)[0].url : '',
+      image: Object.hasOwn(json, 'images') ? json.images[0].url : '',
       genres: json.genres,
+      followers: json.followers.total,
     };
     return artist;
   } else {
@@ -122,6 +123,7 @@ async function getArtistRelatedArtists(id: string, maxArtists = 10): Promise<art
         name: entry.name,
         image: Object.hasOwn(entry, 'images') ? entry.images.slice(-1)[0].url : '',
         genres: entry.genres,
+        followers: entry.followers.total,
       });
     });
     return artists;
@@ -174,7 +176,7 @@ async function getAlbum(id: string): Promise<album | null> {
         artists: artists,
         number: entry.track_number,
       };
-      if(discs.filter((x) => x.number === entry.disc_number).length === 0) {
+      if (discs.filter((x) => x.number === entry.disc_number).length === 0) {
         discs.push({
           number: entry.disc_number,
           songs: [],

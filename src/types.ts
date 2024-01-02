@@ -1,4 +1,4 @@
-import type { AlbumArtist } from "./spotify.types";
+import type { AlbumArtist } from './spotify.types';
 
 export type VolumePower = 'muted' | 'low' | 'medium' | 'high';
 
@@ -62,6 +62,7 @@ export interface artist {
   name: string;
   genres: string[];
   image: string; //can be zero
+  followers: number;
 }
 
 export interface artistItem {
@@ -126,7 +127,7 @@ export interface playlist {
 export interface playlistItem {
   id: string;
   name: string;
-  artists: albumArtist[],
+  artists: albumArtist[];
   albumId: string;
   albumName: string;
   image: string;

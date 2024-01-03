@@ -8,7 +8,7 @@ interface Props {
   name: string;
   id: string;
   explicit: boolean;
-  artists: simpleArtist[];
+  artists?: simpleArtist[];
   img?: string;
 }
 
@@ -28,7 +28,7 @@ const props = defineProps<Props>();
       </p>
       <p class="table-song_content_artists">
         <IconExplicit v-if="props.explicit" :style="{ 'margin-right': '0.5rem'}"/>
-        <LinkedArtists :artists="props.artists" />
+        <LinkedArtists v-if="props.artists" :artists="props.artists" />
       </p>
     </div>
   </div>

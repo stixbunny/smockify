@@ -20,5 +20,6 @@ svg {
   height: 20px;
   width: 20px;
   grid-area: 1/1/2/2;
+  fill: #3d91f4;
 }
 </style>

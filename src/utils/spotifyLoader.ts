@@ -18,6 +18,7 @@ import type {
   albumDisc,
   playlist,
   playlistItem,
+  cardItem,
 } from '@/types';
 
 const { access_token } = useMainStore();
@@ -94,7 +95,7 @@ async function getArtistItems(
       const item: artistItem = {
         name: entry.name,
         id: entry.id,
-        image: Object.hasOwn(entry, 'images') ? entry.images.slice(-1)[0].url : '',
+        image: Object.hasOwn(entry, 'images') ? entry.images[1].url : '',
         type: itemType,
       };
       items.push(item);
@@ -105,7 +106,7 @@ async function getArtistItems(
   }
 }
 
-async function getArtistRelatedArtists(id: string, maxArtists = 10): Promise<artist[] | null> {
+async function getArtistRelatedArtists(id: string, maxArtists = 10): Promise<cardItem[] | null> {
   const url = `https://api.spotify.com/v1/artists/${id}/related-artists`;
   const authOptions = {
     method: 'GET',
@@ -116,14 +117,13 @@ async function getArtistRelatedArtists(id: string, maxArtists = 10): Promise<art
   const response = await fetch(url, authOptions);
   if (response.ok) {
     const json: RelatedArtistsResponse = await response.json();
-    const artists: artist[] = [];
+    const artists: cardItem[] = [];
     json.artists.slice(0, maxArtists).forEach((entry) => {
       artists.push({
         id: entry.id,
-        name: entry.name,
-        image: Object.hasOwn(entry, 'images') ? entry.images.slice(-1)[0].url : '',
-        genres: entry.genres,
-        followers: entry.followers.total,
+        title: entry.name,
+        img: Object.hasOwn(entry, 'images') ? entry.images[1].url : '',
+        type: 'artist',
       });
     });
     return artists;

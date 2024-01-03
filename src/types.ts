@@ -10,7 +10,7 @@ export interface homeSection {
 export interface cardItem {
   img: string;
   title: string;
-  subtitle: string;
+  subtitle?: string;
   id: string;
   type: 'album' | 'artist' | 'playlist';
 }
@@ -139,4 +139,19 @@ export interface playlistItem {
 export interface simpleArtist {
   name: string;
   id: string;
+}
+
+export interface artistDiscography {
+  albums: {
+    name: string
+    content: artistItem[] | null;
+  };
+  singles: {
+    name: string;
+    content: artistItem[] | null;
+  };
+  compilations: {
+    name: string;
+    content: artistItem[] | null;
+  };
 }

@@ -1,5 +1,3 @@
-import type { AlbumArtist } from './spotify.types';
-
 export type VolumePower = 'muted' | 'low' | 'medium' | 'high';
 
 export interface homeSection {

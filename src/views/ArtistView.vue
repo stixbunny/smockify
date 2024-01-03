@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { loadArtist } from '@/utils/spotifyLoader';
-import { ref } from 'vue';
 import ArtistPresentation from '@/components/UI/ArtistPresentation.vue';
 import ContentSection from '@/components/UI/ContentSection.vue';
 import DiscographySection from '@/components/UI/DiscographySection.vue';

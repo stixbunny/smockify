@@ -13,7 +13,6 @@ import type {
   artistItem,
   album,
   albumArtist,
-  albumSong,
   albumSongArtist,
   albumDisc,
   playlist,

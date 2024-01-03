@@ -36,7 +36,7 @@ watch(
     <footer>
       <TheMainNav />
     </footer> -->
-    <NotYetImplemented message="Lo siento, la versión móvil aún no ha sido implementada."/>
+    <NotYetImplemented message="Lo siento, la versión móvil aún no ha sido implementada." />
   </div>
   <div id="app-container" ref="appContainer" v-else>
     <header>

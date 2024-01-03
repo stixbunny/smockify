@@ -23,7 +23,6 @@ const emit = defineEmits(['scroll']);
 function scrolling(el: OverlayScrollbars) {
   emit('scroll', el.elements().viewport.scrollTop);
 }
-
 </script>
 
 <template>

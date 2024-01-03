@@ -4,6 +4,7 @@ import ScrollableComponent from '../UI/ScrollableComponent.vue';
 import { useLocalStore } from '@/stores/local';
 import { RouterLink } from 'vue-router';
 import { getRoute } from '@/utils/routes';
+import TextDot from '@/components/text/TextDot.vue';
 
 const library = useLibraryStore();
 const local = useLocalStore();
@@ -20,10 +21,10 @@ const local = useLocalStore();
           <div class="mylibrary-info-container">
             <span class="title">{{ item.title }}</span>
             <span v-if="item.type == 'album'" class="subtitle"
-              >Álbum <span class="dot">•</span> {{ item.author }}</span
+              >Álbum<TextDot />{{ item.author }}</span
             >
             <span v-else-if="item.type == 'playlist'" class="subtitle"
-              >Lista <span class="dot">•</span> {{ item.author }}</span
+              >Lista<TextDot />{{ item.author }}</span
             >
             <span v-else-if="item.type == 'artist'" class="subtitle">Artista</span>
           </div>

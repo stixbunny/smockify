@@ -8,7 +8,7 @@ export interface homeSection {
 export interface cardItem {
   img: string;
   title: string;
-  subtitle: string;
+  subtitle?: string;
   id: string;
   type: 'album' | 'artist' | 'playlist';
 }
@@ -46,83 +46,110 @@ export interface currentSong {
   imgUrl: string;
 }
 
-export interface SimpleSongValue {
-  id: string;
-  album_id: string;
-  disc_number: number;
+// No way of getting total number of streams
+export interface artistTopTrack {
+  songId: string;
+  songName: string;
   duration_ms: number;
   explicit: boolean;
-  name: string;
-  track_number: number;
-  type: string;
-  liked: boolean;
+  imgUrl: string;
 }
 
-export type SimpleSong = Map<string, SimpleSongValue>;
-
-export interface SimpleSongArtist {
-  artist_id: string;
-  song_id: string;
-}
-
-export interface SimpleAlbumValue {
+export interface artist {
   id: string;
-  album_type: 'album' | 'compilation' | 'single';
-  total_tracks: number;
   name: string;
-  release_date: string;
-  liked: boolean;
-}
-
-export type SimpleAlbum = Map<string, SimpleAlbumValue>;
-
-export interface SimpleAlbumArtist {
-  artist_id: string;
-  album_id: string;
-}
-
-export interface SimpleArtistValue {
-  id: string;
-  followers?: number;
-  genres?: string[];
-  name: string;
-  popularity?: number;
-  liked: boolean;
-}
-
-export type SimpleArtist = Map<string, SimpleArtistValue>;
-
-export interface SimplePlaylistValue {
-  id: string;
-  description: string;
+  genres: string[];
+  image: string; //can be zero
   followers: number;
-  owner_id: string;
+}
+
+export interface artistItem {
   name: string;
-  liked: boolean;
-}
-
-export type SimplePlaylist = Map<string, SimplePlaylistValue>;
-
-export interface Owner {
   id: string;
-  display_name: string;
+  image: string;
+  type: 'album' | 'single' | 'appears_on' | 'compilation';
 }
 
-export interface SimplePlaylistSong {
-  playlist_id: string;
-  song_id: string;
+export interface album {
+  albumType: 'album' | 'compilation' | 'single';
+  totalTracks: number;
+  totalDuration: number;
+  id: string;
+  name: string;
+  imgUrl: string;
+  releaseDate: string;
+  releaseYear: number;
+  copyrights: string[];
+  artists: albumArtist[];
+  numberOfSongs: number;
+  discs: albumDisc[];
 }
 
-export interface Copyright {
-  album_id: string; //can be multiple per albu
-  text: string;
-  type: string;
+export interface albumSong {
+  name: string;
+  id: string;
+  durationMs: number;
+  number: number;
+  explicit: boolean;
+  artists: albumSongArtist[];
 }
 
-export interface SimpleImageValue {
-  image_of: string;
-  url: string;
-  type: 'big' | 'small';
+export interface albumArtist {
+  name: string;
+  id: string;
 }
 
-export type SimpleImage = Map<string, SimpleImageValue>;
+export interface albumSongArtist {
+  name: string;
+  id: string;
+}
+
+export interface albumDisc {
+  number: number;
+  songs: albumSong[];
+}
+
+export interface playlist {
+  id: string;
+  name: string;
+  description: string;
+  likes: number;
+  image: string;
+  ownerId: string;
+  ownerName: string;
+  songs: playlistItem[];
+  totalDuration: number;
+  numberOfSongs: number;
+}
+
+export interface playlistItem {
+  id: string;
+  name: string;
+  artists: albumArtist[];
+  albumId: string;
+  albumName: string;
+  image: string;
+  addedOn: string;
+  duration: number;
+  explicit: boolean;
+}
+
+export interface simpleArtist {
+  name: string;
+  id: string;
+}
+
+export interface artistDiscography {
+  albums: {
+    name: string
+    content: artistItem[] | null;
+  };
+  singles: {
+    name: string;
+    content: artistItem[] | null;
+  };
+  compilations: {
+    name: string;
+    content: artistItem[] | null;
+  };
+}

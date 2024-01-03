@@ -1,14 +1,25 @@
 import { defineStore } from 'pinia';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useWindowSize } from '@vueuse/core';
 import { useNavStore } from './nav';
+import ColorThief from 'colorthief';
 
 export const useContentStore = defineStore('content', () => {
   const nav = useNavStore();
   const { width: windowWidth } = useWindowSize();
-  const width = computed(() => {
-    return windowWidth.value - nav.width - 3 * 8;
+  const width = ref(0);
+  watch(
+    () => windowWidth.value,
+    () => {
+      width.value = windowWidth.value - nav.width - 3 * 8;
+    }
+  );
+  const widthAsPx = computed(() => {
+    return width.value + 'px';
   });
+  width.value = windowWidth.value - nav.width - 3 * 8;
+  console.log('width: ' + width.value);
+  console.log('widthaspx: ' + widthAsPx.value);
 
   const xPaddingAsNumber = computed(() => {
     const base = 16;
@@ -74,20 +85,38 @@ export const useContentStore = defineStore('content', () => {
   });
 
   type RGBcolor = {
-    red: number,
-    green: number,
-    blue: number,
-  }
+    red: number;
+    green: number;
+    blue: number;
+  };
 
-  function createColorString(color: RGBcolor){
+  function createColorString(color: RGBcolor) {
     return `rgb(${color.red}, ${color.green}, ${color.blue})`;
   }
 
-  const selectedColor = ref(createColorString({ red: 72, green: 32, blue: 176}));
+  const selectedColor = ref(createColorString({ red: 72, green: 32, blue: 176 }));
 
-  function setColor(red: number, green: number, blue: number){
-    selectedColor.value = createColorString({red, green, blue});
+  function setColor(red: number, green: number, blue: number) {
+    selectedColor.value = createColorString({ red, green, blue });
   }
 
-  return { width, xPadding, size, colWidth, sectionColumns, sectionGap, sectionGapAsPx, setColor, selectedColor };
+  function setColorFromElement(img: any) {
+    const colorThief = new ColorThief();
+    const color = colorThief.getColor(img);
+    setColor(color[0], color[1], color[2]);
+  }
+
+  return {
+    width,
+    widthAsPx,
+    xPadding,
+    size,
+    colWidth,
+    sectionColumns,
+    sectionGap,
+    sectionGapAsPx,
+    setColor,
+    setColorFromElement,
+    selectedColor,
+  };
 });

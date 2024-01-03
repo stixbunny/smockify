@@ -2,20 +2,29 @@
 import IconArrowLeft from '../icons/IconArrowLeft.vue';
 import IconArrowRight from '../icons/IconArrowRight.vue';
 import IconDownload from '../icons/IconDownload.vue';
-import ImgProfile from '../../assets/img/profile.webp';
+import ImgProfile from '@/assets/img/profile.webp';
+import router from '@/router';
 
 defineProps<{
-  notTransparent: boolean
+  notTransparent: boolean;
 }>();
+
+function goBack() {
+  router.back();
+}
+
+function goForward() {
+  router.forward();
+}
 </script>
 
 <template>
   <nav :data-visible="notTransparent">
     <div class="content-navigation">
-      <a class="pill-container circular-container">
+      <a @click="goBack" class="pill-container circular-container">
         <IconArrowLeft />
       </a>
-      <a class="pill-container circular-container">
+      <a @click="goForward" class="pill-container circular-container">
         <IconArrowRight />
       </a>
     </div>
@@ -46,9 +55,9 @@ nav {
   --item-height: 32px;
   z-index: 10;
 
-  transition: background-color .25s;
+  transition: background-color 0.25s;
 }
-nav[data-visible="true"] {
+nav[data-visible='true'] {
   background-color: var(--accent-color);
 }
 .pill-container {

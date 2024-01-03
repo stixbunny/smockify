@@ -5,6 +5,7 @@ import ScrollableComponent from '../UI/ScrollableComponent.vue';
 import ContentView from '../content/ContentView.vue';
 import { useContentStore } from '@/stores/content';
 import { ref } from 'vue';
+import IconSpinner from '../icons/IconSpinner.vue';
 
 const content = useContentStore();
 
@@ -28,6 +29,9 @@ function scrolling(height: number) {
             <Component :is="slotProps.Component" />
           </ContentView>
         </ScrollableComponent>
+        <template #fallback>
+          <IconSpinner />
+        </template>
       </Suspense>
     </RouterView>
   </div>
